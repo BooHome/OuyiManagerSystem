@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.saproductDAO">
+	<resultMap id="countMap" type="SapCount" >  
+		<id column="id"  property="id" />
+        <result column="saProductId" property="sapId"/>
+        <result column="PV" property="PV"/>
+        <result column="UV" property="UV"/>
+        <result column="cAddTime" property="CAddTime"/>
+          <association property="sap" javaType="StandAloneProduct">
+        	<id column="sapId"  property="id" />
+        <result column="sapName" property="sapName"/>  
+        <result column="url" property="url"/>
+        <result column="sapActivate" property="sapActivate"/>
+        </association>   
+    </resultMap>  
+    
+	  <select id="querySaproduct" parameterType="java.util.HashMap" resultMap="countMap">
+	  	select  
+	 		a.*,b.*
+	 		from co_standaloneproduct  as  b  left join co_saproduct as a  on  a.saProductId = b.sapId  
+	        <where>
+	     		  a.id!='' and  a.id is not NULL	
+	        	   <if test="startTime!=null and !&quot;&quot;.equals(startTime.trim())">  
+         				and a.cAddTime >=#{startTime}    
+       				</if>  
+				    <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">  
+				        and  a.cAddTime &lt;=#{endTime}  
+				    </if>  
+				     <if test="countName!=null and !&quot;&quot;.equals(countName.trim())">  
+				        and  b.sapName like "%"#{countName}"%" 
+				    </if>  
+				     <if test="countUrl!=null and !&quot;&quot;.equals(countUrl.trim())">  
+				        and  b.url like "%"#{countUrl}"%" 
+				    </if>
+				    <if test="CActivate!=null">  
+				        and  b.sapActivate = #{CActivate}
+				    </if>    
+	        </where>
+	        order by a.id asc
+	  </select>
+	  
+	<insert id="add"  parameterType="Count">
+		insert into co_saproduct   (saProductId,PV,UV,cAddTime) values (#{sapId},#{PV},#{UV},NOW());
+	</insert>    
+	
+	 <update id="update" parameterType="Count" >
+            update co_saproduct 
+            <set>
+           		  <if test="PV != null" >  
+			       PV = #{PV}
+			     </if>  
+			      <if test="UV != null" >  
+			       , UV = #{UV}
+			     </if>  
+            </set>
+            where saProductId = #{sapId} and DATE(cAddTime)=DATE(#{CAddTime} )
+        </update>
+	
+	</mapper>

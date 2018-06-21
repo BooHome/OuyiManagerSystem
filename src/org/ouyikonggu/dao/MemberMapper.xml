@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.MemberDAO">
+	<resultMap id="memberMap" type="Member" >  
+		<id column="id"  property="id" />
+        <result column="mProductID" property="mProductID"/>  
+        <result column="mTel" property="mTel"/>
+        <result column="mAddTime" property="mAddTime"/>
+
+    </resultMap>  
+    
+	  <select id="queryList" resultMap="memberMap">
+	          select *, count(distinct mTel) FROM (
+	        		SELECT  * FROM `co_members`)as alias group by mTel
+	  </select>
+	  
+	
+	<insert id="add"  parameterType="Member">
+		insert into co_members (mProductID,mTel,mAddTime) values (#{mProductID},#{mTel},NOW());
+	</insert>    
+	
+	  <select id="queryUV" parameterType="int" resultType = "int" >
+	        SELECT  count(distinct mTel) FROM `co_members` where mProductID = #{id} and DATE(mAddTime) = CURDATE();
+	  </select>
+	  
+	  <select id="queryPV" parameterType="int" resultType = "int" >
+	        SELECT  count(mTel) FROM `co_members` where mProductID = #{id} and DATE(mAddTime) = CURDATE();
+	  </select>
+	  
+	   <select id="queryPhoneByTime" parameterType="java.util.HashMap" resultMap="memberMap">
+	   
+	          SELECT  count(distinct mTel) FROM `co_members` 
+	        <where>
+	        		<if test="startTime!=null and !&quot;&quot;.equals(startTime.trim())">  
+         				 mAddTime >=#{startTime}    
+       				</if>  
+				    <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">  
+				        and  mAddTime &lt;=#{endTime}  
+				    </if>  
+	        </where>
+	  </select>
+	  
+	 <select id="selectMemberByPid" parameterType="int" resultMap="memberMap">
+	        select *, count(distinct mTel) FROM (
+	        		SELECT  * FROM `co_members` where mProductID=#{pid})as alias group by mTel
+	  </select>
+	  
+	  <select id="countPidByPhone" parameterType="String" resultType = "int">
+	        select count(distinct mProductID) from co_members where mTel=#{mTel}
+	  </select>
+	  
+	  <select id="selectPidByPhone" parameterType="String" resultMap="memberMap">
+	        select distinct mProductID from co_members where mTel=#{mTel}
+	  </select>
+	  
+	  <select id="countPhoneByPid" parameterType="Member" resultType = "int">
+	        select count(mTel) from co_members where mTel=#{mTel} and mProductID=#{mProductID}
+	  </select>
+	</mapper>

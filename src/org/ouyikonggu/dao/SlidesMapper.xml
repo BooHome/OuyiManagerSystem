@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.SlidesDAO">
+	<resultMap id="slidesMap" type="Slides" >  
+        <id column="sid"  property="id" />
+        <result column="sTitle" property="STitle"/> 
+         <result column="scid" property="scid"/>  
+        <result column="sTitleImg" property="STitleImg"/>
+        <result column="sSort" property="SSort"/>  
+        <result column="sAddTime" property="SAddTime"/> 
+        <association property="productClass" javaType="ProductClass">
+        	<id column="scid"  property="id" />
+        <result column="cName" property="cName"/>  
+        <result column="cSort" property="cSort"/>
+        </association> 
+    </resultMap>  
+
+	<insert id="add" parameterType="Slides" >
+          insert into co_slides ( sid,scid,sTitle,sTitleImg,sSort,sAddTime )
+           values (#{id},#{scid},#{STitle},#{STitleImg},#{SSort},now())   
+     </insert>
+         
+ 		<select id="selectByScid" parameterType="int" resultMap="slidesMap">
+            select  
+	 		*
+	 		from co_slides    where scid= #{scid}    
+        </select>
+
+        <select id="selectById" parameterType="int" resultMap="slidesMap">
+            select  
+	 		a.*,b.*
+	 		from co_productclass  as  b  left join co_slides as a  on  a.scid = b.id    where a.sid= #{id}    
+        </select>
+ 
+        <update id="update" parameterType="Slides" >
+            update co_slides 
+            <set>
+            	<if test="productClass!=null">
+	            	 <if test="productClass.id != null" >  
+				        scid = #{productClass.id}
+				     </if>
+			     </if>  
+			     <if test="STitle != null and !&quot;&quot;.equals(STitle.trim())" >  
+			       , sTitle = #{STitle}
+			     </if>  
+			     <if test="STitleImg != null and !&quot;&quot;.equals(STitleImg.trim())" >  
+			       , sTitleImg = #{STitleImg}
+			     </if> 
+			     <if test="SSort != null" >  
+			       , sSort = #{SSort}
+			     </if> 
+            </set>
+            where sid=#{id}   
+        </update>
+        
+       <delete id="delete" parameterType="java.util.List">
+	        delete from co_slides where sid in
+	      <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item.id}
+          </foreach>
+	    </delete>
+	 	
+	 	<select id="queryList" parameterType="Slides" resultMap="slidesMap">
+	 		select  
+	 		a.*,b.*
+	 		from co_productclass  as  b  left join co_slides as a  on  a.scid = b.id  
+	 		<where> 			
+	 			a.scid!='' and  a.scid is not NULL
+		 		<if test="STitle != null and !&quot;&quot;.equals(STitle.trim())" > 
+				and a.sTitle like "%"#{STitle}"%"
+				 </if> 		
+	 		</where>
+	 		order by b.cSort asc  
+	 	</select>
+	</mapper>

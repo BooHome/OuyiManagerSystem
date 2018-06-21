@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ouyikonggu.dao.AdminDAO">
+	<resultMap id="adminMap" type="Admin">
+		<id column="id" property="id" />
+		<result column="userName" property="adName" />
+		<result column="userPwd" property="adPwd" />
+	</resultMap>
+	<select id="get" parameterType="Admin" resultType="Admin">
+		select * from co_admins where userName= #{adName}
+	</select>
+
+	<select id="list" resultMap="adminMap">
+		select * from co_admins
+	</select>
+
+</mapper>

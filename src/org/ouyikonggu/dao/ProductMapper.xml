@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.ProductDAO">
+	<resultMap id="productMap" type="org.ouyikonggu.moudel.Product" >  
+        <id column="pid"  property="id" />
+        <result column="pcid" property="pcid"/> 
+        <result column="pTitle" property="pTitle"/>  
+        <result column="pTitleImg" property="pTitleImg"/> 
+        <result column="pRemark" property="pRemark"/> 
+        <result column="pED" property="pED"/> 
+        <result column="pFDSJ" property="pFDSJ"/> 
+        <result column="pLX" property="pLX"/> 
+        <result column="pNum" property="pNum"/> 
+        <result column="pJKQX" property="pJKQX"/> 
+        <result column="pUrl" property="pUrl"/> 
+        <result column="pState" property="pState"/> 
+        <result column="pHitNum" property="pHitNum"/> 
+        <result column="pSortID" property="pSortID"/> 
+        <result column="pAddTime" property="pAddTime"/>
+        <result column="pActivate" property="pActivate"/>
+        <association property="productClass" javaType="ProductClass">
+        	<id column="pcid"  property="id" />
+        <result column="cName" property="cName"/>  
+        <result column="cSort" property="cSort"/>
+        </association>   
+    </resultMap>  
+    
+
+		<insert id="add" parameterType="Product" >
+	       insert into co_products 
+		       	( pcid, pTitle, pTitleImg, pRemark, pED, pFDSJ, pLX, pJKQX, pUrl,pNum, pState,
+	   	 	 	pSortID, pAddTime,pActivate)
+   	 	 		values(#{pcid}, #{pTitle},  #{pTitleImg}, #{pRemark}, #{pED}, 
+	     	 #{pFDSJ}, #{pLX}, #{pJKQX},  #{pUrl},#{pNum}, #{pState},  #{pSortID},  now(),#{pActivate})   
+	    </insert>
+  
+        <select id="selectById" parameterType="int" resultMap="productMap">
+          select  
+	 		a.*,b.*
+	 		from co_productclass  as  b  left join co_products as a  on  a.pcid = b.id  where a.pid= #{id}   
+        </select>
+ 
+        <update id="update" parameterType="Product" >
+            update co_products
+            <set>
+	            <if test="pcid != null " >  
+				      pcid = #{pcid}
+				  </if> 
+			      <if test="pTitle != null and !&quot;&quot;.equals(pTitle.trim())" >  
+			        ,pTitle = #{pTitle}
+			     </if>
+			      <if test="pTitleImg != null and !&quot;&quot;.equals(pTitleImg.trim())" >  
+			        ,pTitleImg = #{pTitleImg}
+			     </if>  
+			      <if test="pRemark != null and !&quot;&quot;.equals(pRemark.trim())" >  
+			       ,pRemark = #{pRemark}
+			     </if> 
+			      <if test="pED != null and !&quot;&quot;.equals(pED.trim())" >  
+			        ,pED = #{pED}
+			     </if>  
+			      <if test="pFDSJ != null and !&quot;&quot;.equals(pFDSJ.trim())" >  
+			        ,pFDSJ = #{pFDSJ}
+			     </if> 
+			      <if test="pLX != null and !&quot;&quot;.equals(pLX.trim())" >  
+			       ,pLX = #{pLX}
+			     </if>  
+			      <if test="pJKQX != null and !&quot;&quot;.equals(pJKQX.trim())" >  
+			       ,pJKQX = #{pJKQX}
+			     </if> 
+			      <if test="pUrl != null and !&quot;&quot;.equals(pUrl.trim())" >  
+			       , pUrl = #{pUrl}
+			     </if> 
+			     <if test="pNum != null " >  
+			       , pNum = #{pNum}
+			     </if>  
+			      <if test="pState != null " >  
+			       , pState = #{pState}
+			     </if>  
+			       <if test="pActivate != null " >  
+			       , pActivate = #{pActivate}
+			     </if>  
+			     <if test="pSortID != null" >  
+			       , pSortID = #{pSortID}
+			     </if>  
+            </set>
+            where pid=#{id}   
+        </update>
+        
+        <delete id="delete" parameterType="java.util.List" >
+		    delete from co_products where pid in(
+        		<foreach collection="list"  item="item" separator=",">
+        			#{item.id}
+        		</foreach>
+        	) 
+		</delete>
+	 	
+	 	<select id="queryList" parameterType="org.ouyikonggu.moudel.Product" resultMap="productMap">
+	 		select  
+	 		a.*,b.*
+	 		from co_productclass  as  b  left join co_products as a  on  a.pcid = b.id  
+	 		<where> 			
+	 			a.pcid!='' and  a.pcid is not NULL	
+	 			<if test="pTitle != null and !&quot;&quot;.equals(pTitle.trim())" > 
+				and a.pTitle like "%"#{pTitle}"%"
+				 </if> 		
+	 		</where>
+	 		 order by a.pSortID asc 
+	 	</select>
+		
+		<select id="selectByPcId" parameterType="int" resultMap="productMap">
+             select  
+	 		a.*,b.*
+	 		from co_productclass  as  b  left join co_products as a  on  a.pcid = b.id  where a.pcid= #{id}   
+	 		order by a.pSortID asc 
+        </select>
+       
+       	<select id="selectByTitle" parameterType="String" resultMap="productMap">
+          select * from co_products where pTitle= #{pTitle}
+        </select> 
+	</mapper>

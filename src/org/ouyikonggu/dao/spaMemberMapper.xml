@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.spaMemberDAO">
+	<resultMap id="memberMap" type="Member" >  
+		<id column="id"  property="id" />
+        <result column="mSapId" property="mProductID"/>  
+        <result column="mIpAdress" property="mTel"/>
+        <result column="mAddTime" property="mAddTime"/>
+    </resultMap>  
+    
+    <insert id="add"  parameterType="Member">
+		insert into co_sapmember (mSapId,mIpAdress,mAddTime) values (#{mProductID},#{mTel},NOW());
+	</insert>    
+	
+	 <select id="queryUV" parameterType="int" resultType = "int" >
+	        SELECT  count(distinct mIpAdress) FROM `co_sapmember` where mSapId = #{id} and DATE(mAddTime) = CURDATE();
+	  </select>
+	  
+	  <select id="queryPV" parameterType="int" resultType = "int" >
+	        SELECT  count(mIpAdress) FROM `co_sapmember` where mSapId = #{id} and DATE(mAddTime) = CURDATE();
+	  </select>
+	</mapper>

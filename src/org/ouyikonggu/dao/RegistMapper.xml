@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.RegistDAO">
+	<resultMap id="countMap" type="Count" >  
+		<id column="id"  property="id" />
+        <result column="pTitle" property="countName"/>  
+        <result column="pV" property="pV"/>
+        <result column="uV" property="uV"/>
+        <result column="CActivate" property="CActivate"/>
+        <result column="cAddTime" property="cAddTime"/>
+    </resultMap>  
+    
+	  <select id="queryRegist" parameterType="java.util.HashMap" resultMap="countMap">
+	      select * from co_regist  
+	        <where>
+	     		  1=1
+	        	   <if test="startTime!=null and !&quot;&quot;.equals(startTime.trim())">  
+         				and cAddTime >=#{startTime}    
+       				</if>  
+				    <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">  
+				        and  cAddTime &lt;=#{endTime}  
+				    </if>  
+				     <if test="pTitle!=null and !&quot;&quot;.equals(pTitle.trim())">  
+				        and  pTitle like "%"#{pTitle}"%" 
+				    </if>  
+				    <if test="CActivate!=null">  
+				        and  CActivate=#{CActivate}
+				    </if>  
+	        </where>
+	  </select>
+	  
+	<insert id="add"  parameterType="Count">
+		insert into co_regist   (pTitle,pV,uV,cAddTime,CActivate) values (#{countName},#{pV},#{uV},NOW(),#{CActivate});
+	</insert>    
+	
+	 <update id="update" parameterType="Count" >
+            update co_regist 
+            <set>
+           		  <if test="pV != null" >  
+			       pV = #{pV}
+			     </if>  
+			      <if test="uV != null" >  
+			       , uV = #{uV}
+			     </if>  
+			     <if test="CActivate != null" >  
+			       , CActivate = #{CActivate}
+			     </if>  
+            </set>
+            where pTitle = #{countName} and DATE(cAddTime)=DATE(#{cAddTime} )
+        </update>
+	</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.ouyikonggu.dao.ProductClassDAO">
+	<resultMap id="productclassMap" type="org.ouyikonggu.moudel.ProductClass" >  
+        <id column="id"  property="id" />
+        <result column="cName" property="cName"/>  
+        <result column="cSort" property="cSort"/>  
+    </resultMap>  
+
+	<insert id="add" parameterType="ProductClass" >
+          insert into co_productclass ( cName,cSort ) values (#{cName},#{cSort})   
+     </insert>
+         
+  
+        <select id="selectByName" parameterType="ProductClass" resultMap="productclassMap">
+            select * from   co_productclass  where cName= #{cName}   
+        </select>
+        
+        <select id="selectById" parameterType="int" resultMap="productclassMap">
+            select * from   co_productclass  where id= #{id}   
+        </select>
+ 
+        <update id="update" parameterType="ProductClass" >
+            update co_productclass 
+            <set>
+            	 <if test="cName != null and !&quot;&quot;.equals(cName.trim())" >  
+			        cName = #{cName}
+			     </if>  
+
+			      <if test="cSort != null" >  
+			       , cSort = #{cSort}
+			     </if>  
+            </set>
+            where id=#{id}   
+        </update>
+        
+        <delete id="delete" parameterType="java.util.List">
+	        delete from co_productclass where id in
+	      <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item.id}
+          </foreach>
+	    </delete>
+	 	
+	 	<select id="list" parameterType="ProductClass" resultMap="productclassMap">
+	 		select id,cName,cSort from co_productclass
+	 		<where>
+	 			 <if test="cName != null and !&quot;&quot;.equals(cName.trim())" > 
+			      cName like "%"#{cName}"%" 
+			     </if>  
+	 		</where>
+	 		order by cSort asc 
+	 	</select>
+	</mapper>
