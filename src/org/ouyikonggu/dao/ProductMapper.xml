@@ -112,8 +112,8 @@
 		<select id="selectByPcId" parameterType="int" resultMap="productMap">
              select  
 	 		a.*,b.*
-	 		from co_productclass  as  b  left join co_products as a  on  a.pcid = b.id  where a.pcid= #{id}   
-	 		order by a.pSortID asc 
+	 		from co_productclass  as  b  left join co_products as a  on  a.pcid = b.id  where a.pcid= #{id}
+	 		and a.pActivate=1 order by a.pSortID asc 
         </select>
        
        	<select id="selectByTitle" parameterType="String" resultMap="productMap">

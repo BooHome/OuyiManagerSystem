@@ -39,7 +39,7 @@ public class SendMsgServiceImpl implements SendMsgService{
 			mapParam.put("dc", "15");
 			mapParam.put("un", "800004");
 			mapParam.put("pw", URLEncoder.encode("8040423", "utf-8"));
-			mapParam.put("sm",  URLEncoder.encode(("【信贷之家】您的验证码为："+code), "utf-8"));
+			mapParam.put("sm",  URLEncoder.encode(("【急贷之家】您的验证码为："+code), "utf-8"));
 			mapParam.put("da", phone);
 			mapParam.put("tf", "3");
 			mapParam.put("rf", "2");

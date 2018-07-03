@@ -233,7 +233,7 @@ public class SaproductController {
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
 
-		if (name.equals("")&&startTime.equals("")) {
+		if (name.equals("")&&startTime.equals("")&& endTime.equals("")) {
 			startTime=DateUtil.getDate(new Date());
 		}
 		

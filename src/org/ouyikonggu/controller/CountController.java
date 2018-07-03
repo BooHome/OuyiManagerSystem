@@ -43,7 +43,7 @@ public class CountController {
 	@Autowired
 	ProductServiceImpl psi;
 	
-	//²úÆ·×¢²áÍ³¼Æ
+	//äº§å“æ³¨å†Œç»Ÿè®¡
 	@RequestMapping("registerCount")
 	public ModelAndView registerCount(HttpServletRequest request){
 		int pageNum=Integer.parseInt(request.getParameter("pageNum"));
@@ -55,10 +55,10 @@ public class CountController {
 		defultR.put("CActivate", 1);
 		
 		
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<Count> dcList=csi.queryRegist(defultR);
 		request.getSession().setAttribute("download", dcList);
-		  //	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+		  //	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(pageNum,19);  
 	    
 		List<Count> cList=csi.queryRegist(defultR);
@@ -66,29 +66,29 @@ public class CountController {
 			System.out.println(count);
 		}
 		
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(cList,19);  
 		mav.addObject("pageInfo",pageInfo);
 		mav.setViewName("count/registerCount");
 		return mav;
 	}
 	
-	//²úÆ·×¢²áÏêÇé
+	//äº§å“æ³¨å†Œè¯¦æƒ…
 	@RequestMapping("registerPhone")
 	public ModelAndView registerPhone(HttpServletRequest req){
 		int pageNum=Integer.parseInt(req.getParameter("pageNum"));
 		String pTitle=req.getParameter("pTitle");
 		Product rProduct=psi.selectByTitle(pTitle);
 		
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<Member> dmList=csi.selectMemberByPid(rProduct.getId());
 		req.getSession().setAttribute("download", dmList);
-	    //	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+	    //	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(pageNum,19);  
 	    
 		List<Member> mList=csi.selectMemberByPid(rProduct.getId());
 		
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(mList,19);  
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pTitle",pTitle);
@@ -97,15 +97,15 @@ public class CountController {
 		return mav;
 	}
 	
-	// ²éÑ¯²úÆ·
+	// æŸ¥è¯¢äº§å“
 	@RequestMapping(value = "searchregister", method = RequestMethod.GET)
 	public ModelAndView searchRegister(HttpServletRequest requst) {
-		//½øÀ´µÄ²éÑ¯Ìõ¼ş
+		//è¿›æ¥çš„æŸ¥è¯¢æ¡ä»¶
 		String name = requst.getParameter("keyName");
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
 		
-		if (name.equals("")&&startTime.equals("")) {
+		if (name.equals("")&&startTime.equals("") && endTime.equals("")) {
 			startTime=DateUtil.getDate(new Date());
 		}
 		Map searchR=new HashMap<>();
@@ -113,11 +113,11 @@ public class CountController {
 		searchR.put("endTime", endTime);
 		searchR.put("pTitle", name);
 		
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<Count> dcList=csi.queryRegist(searchR);
 		requst.getSession().setAttribute("download", dcList);
 		
-	    //	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+	    //	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(1,19);  
 	    
 		List<Count> cList=csi.queryRegist(searchR);
@@ -125,7 +125,7 @@ public class CountController {
 			System.out.println(count);
 		}
 		
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(cList,19);  
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("searchR",searchR);
@@ -134,28 +134,28 @@ public class CountController {
 		return mav;
 	}
 	
-	//ÓÃ»§Í³¼Æ
+	//ç”¨æˆ·ç»Ÿè®¡
 	@RequestMapping("userCount")
 	public ModelAndView userCount(HttpServletRequest request){
 		int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 		ModelAndView mav = new ModelAndView();
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<User> duList=csi.selectMember();
 		request.getSession().setAttribute("download", duList);
-		 //	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+		 //	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(pageNum,19);  
 		List<User> uList=csi.selectMember();
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(uList,19);  
 		mav.addObject("pageInfo",pageInfo);
 		mav.setViewName("count/userCount");
 		return mav;
 	}
 	
-	// ²éÑ¯ÓÃ»§
+	// æŸ¥è¯¢ç”¨æˆ·
 	@RequestMapping(value = "searchuser", method = RequestMethod.GET)
 	public ModelAndView searchUser(HttpServletRequest requst) {
-		// ½øÀ´µÄ²éÑ¯Ìõ¼ş
+		// è¿›æ¥çš„æŸ¥è¯¢æ¡ä»¶
 		String name = requst.getParameter("keyName");
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
@@ -165,10 +165,10 @@ public class CountController {
 		searchU.put("endTime", endTime);
 		searchU.put("uTel", name);
 		
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<User> duList = csi.queryUser(searchU);
 		requst.getSession().setAttribute("download", duList);
-		 //	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+		 //	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(1,19);  
 	    
 		List<User> uList = csi.queryUser(searchU);
@@ -176,20 +176,21 @@ public class CountController {
 			System.out.println(user);
 		}
 
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(uList,19);  
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageInfo", pageInfo);
+		mav.addObject("searchU",searchU);
 		mav.setViewName("count/userCount");
 		return mav;
 	}
 	
-	// ²úÆ·×¢²áÏêÇé
+	// äº§å“æ³¨å†Œè¯¦æƒ…
 	@RequestMapping("userProduct")
 	public ModelAndView userProduct(HttpServletRequest req) {
 		int pageNum=Integer.parseInt(req.getParameter("pageNum"));
 		
-	    //	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+	    //	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(pageNum,19);  
 		String uTel=req.getParameter("uTel");
 		System.out.println(uTel);
@@ -197,7 +198,7 @@ public class CountController {
 		for (UserProduct userProduct : pList) {
 			System.out.println(userProduct);
 		}
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(pList,19);  
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("uTel",uTel);
@@ -207,7 +208,7 @@ public class CountController {
 	}
 	
 	 /**  
-     * ÎÄ¼şÏÂÔØ¹¦ÄÜ  
+     * æ–‡ä»¶ä¸‹è½½åŠŸèƒ½  
      * @param request  
      * @param response  
      * @throws Exception  
@@ -221,28 +222,28 @@ public class CountController {
 		}
 
     	 
-        //Ä£ÄâÎÄ¼ş£¬Ô´ÎÄ¼şÂ·¾¶Ãû  
+        //æ¨¡æ‹Ÿæ–‡ä»¶ï¼Œæºæ–‡ä»¶è·¯å¾„å  
         String outPutPath = request.getSession().getServletContext().getRealPath("data/csvFile");  
-        //ÏÂÔØÎÄ¼şÃû  
+        //ä¸‹è½½æ–‡ä»¶å  
         String filename = "downloadCSV";  
-        //±íÍ·Êı¾İ
+        //è¡¨å¤´æ•°æ®
         LinkedHashMap map = new LinkedHashMap();  
-        map.put("1", "²úÆ·Ãû³Æ");  
-        map.put("2", "²úÆ··ÃÎÊÁ¿£¨PV£©");  
-        map.put("3", "·ÃÎÊÓÃ»§Á¿£¨UV£©");  
-        map.put("4", "Êı¾İÍ³¼ÆÊ±¼ä");  
+        map.put("1", "äº§å“åç§°");  
+        map.put("2", "äº§å“è®¿é—®é‡ï¼ˆPVï¼‰");  
+        map.put("3", "è®¿é—®ç”¨æˆ·é‡ï¼ˆUVï¼‰");  
+        map.put("4", "æ•°æ®ç»Ÿè®¡æ—¶é—´");  
              		
-        String fileds[] = new String[] { "countName", "pV" , "uV", "cAddTime"};// ÉèÖÃÁĞÓ¢ÎÄÃû£¨Ò²¾ÍÊÇÊµÌåÀàÀïÃæ¶ÔÓ¦µÄÁĞÃû£©  
+        String fileds[] = new String[] { "countName", "pV" , "uV", "cAddTime"};// è®¾ç½®åˆ—è‹±æ–‡åï¼ˆä¹Ÿå°±æ˜¯å®ä½“ç±»é‡Œé¢å¯¹åº”çš„åˆ—åï¼‰  
         
         File file = CSVUtils.createCSVFile(cList, fileds, map, outPutPath,  
         		filename); 
-        //»ñÈ¡ÊäÈëÁ÷  
+        //è·å–è¾“å…¥æµ  
         InputStream bis = new BufferedInputStream(new FileInputStream(file));  
-        //×ªÂë£¬ÃâµÃÎÄ¼şÃûÖĞÎÄÂÒÂë  
+        //è½¬ç ï¼Œå…å¾—æ–‡ä»¶åä¸­æ–‡ä¹±ç   
         filename = URLEncoder.encode(filename,"UTF-8");  
-        //ÉèÖÃÎÄ¼şÏÂÔØÍ·  
+        //è®¾ç½®æ–‡ä»¶ä¸‹è½½å¤´  
         response.addHeader("Content-Disposition", "attachment;filename=" + file.getName());    
-        //1.ÉèÖÃÎÄ¼şContentTypeÀàĞÍ£¬ÕâÑùÉèÖÃ£¬»á×Ô¶¯ÅĞ¶ÏÏÂÔØÎÄ¼şÀàĞÍ    
+        //1.è®¾ç½®æ–‡ä»¶ContentTypeç±»å‹ï¼Œè¿™æ ·è®¾ç½®ï¼Œä¼šè‡ªåŠ¨åˆ¤æ–­ä¸‹è½½æ–‡ä»¶ç±»å‹    
         response.setContentType("multipart/form-data");   
         BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());  
         int len = 0;  
@@ -253,12 +254,12 @@ public class CountController {
         bis.close();
         out.close(); 
         
-        //É¾³ıÉú³ÉµÄÎÄ¼ş
+        //åˆ é™¤ç”Ÿæˆçš„æ–‡ä»¶
         deleteFile(file.getPath());
     }
     
     /**  
-     * ÎÄ¼şÏÂÔØ¹¦ÄÜ  
+     * æ–‡ä»¶ä¸‹è½½åŠŸèƒ½  
      * @param request  
      * @param response  
      * @throws Exception  
@@ -272,27 +273,27 @@ public class CountController {
 		}
 
     	 
-        //Ä£ÄâÎÄ¼ş£¬Ô´ÎÄ¼şÂ·¾¶Ãû  
+        //æ¨¡æ‹Ÿæ–‡ä»¶ï¼Œæºæ–‡ä»¶è·¯å¾„å  
         String outPutPath = request.getSession().getServletContext().getRealPath("data/csvFile");  
-        //ÏÂÔØÎÄ¼şÃû  
+        //ä¸‹è½½æ–‡ä»¶å  
         String filename = "downloadCSV";  
-        //±íÍ·Êı¾İ
+        //è¡¨å¤´æ•°æ®
         LinkedHashMap map = new LinkedHashMap();  
-        map.put("1", "ÓÃ»§ÊÖ»úºÅÂë");  
-        map.put("2", "·ÃÎÊ²úÆ·ÊıÁ¿");  
-        map.put("3", "Ê×´Î·ÃÎÊÊ±¼ä");  
+        map.put("1", "ç”¨æˆ·æ‰‹æœºå·ç ");  
+        map.put("2", "è®¿é—®äº§å“æ•°é‡");  
+        map.put("3", "é¦–æ¬¡è®¿é—®æ—¶é—´");  
              		
-        String fileds[] = new String[] { "uTel", "pCount" , "uAddTime"};// ÉèÖÃÁĞÓ¢ÎÄÃû£¨Ò²¾ÍÊÇÊµÌåÀàÀïÃæ¶ÔÓ¦µÄÁĞÃû£©  
+        String fileds[] = new String[] { "uTel", "pCount" , "uAddTime"};// è®¾ç½®åˆ—è‹±æ–‡åï¼ˆä¹Ÿå°±æ˜¯å®ä½“ç±»é‡Œé¢å¯¹åº”çš„åˆ—åï¼‰  
         
         File file = CSVUtils.createCSVFile(cList, fileds, map, outPutPath,  
         		filename); 
-        //»ñÈ¡ÊäÈëÁ÷  
+        //è·å–è¾“å…¥æµ  
         InputStream bis = new BufferedInputStream(new FileInputStream(file));  
-        //×ªÂë£¬ÃâµÃÎÄ¼şÃûÖĞÎÄÂÒÂë  
+        //è½¬ç ï¼Œå…å¾—æ–‡ä»¶åä¸­æ–‡ä¹±ç   
         filename = URLEncoder.encode(filename,"UTF-8");  
-        //ÉèÖÃÎÄ¼şÏÂÔØÍ·  
+        //è®¾ç½®æ–‡ä»¶ä¸‹è½½å¤´  
         response.addHeader("Content-Disposition", "attachment;filename=" + file.getName());    
-        //1.ÉèÖÃÎÄ¼şContentTypeÀàĞÍ£¬ÕâÑùÉèÖÃ£¬»á×Ô¶¯ÅĞ¶ÏÏÂÔØÎÄ¼şÀàĞÍ    
+        //1.è®¾ç½®æ–‡ä»¶ContentTypeç±»å‹ï¼Œè¿™æ ·è®¾ç½®ï¼Œä¼šè‡ªåŠ¨åˆ¤æ–­ä¸‹è½½æ–‡ä»¶ç±»å‹    
         response.setContentType("multipart/form-data");   
         BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());  
         int len = 0;  
@@ -303,12 +304,12 @@ public class CountController {
         bis.close();
         out.close(); 
         
-        //É¾³ıÉú³ÉµÄÎÄ¼ş
+        //åˆ é™¤ç”Ÿæˆçš„æ–‡ä»¶
         deleteFile(file.getPath());
     }
 
     /**  
-     * ÎÄ¼şÏÂÔØ¹¦ÄÜ  
+     * æ–‡ä»¶ä¸‹è½½åŠŸèƒ½  
      * @param request  
      * @param response  
      * @throws Exception  
@@ -322,26 +323,26 @@ public class CountController {
 		}
 
     	 
-        //Ä£ÄâÎÄ¼ş£¬Ô´ÎÄ¼şÂ·¾¶Ãû  
+        //æ¨¡æ‹Ÿæ–‡ä»¶ï¼Œæºæ–‡ä»¶è·¯å¾„å  
         String outPutPath = request.getSession().getServletContext().getRealPath("data/csvFile");  
-        //ÏÂÔØÎÄ¼şÃû  
+        //ä¸‹è½½æ–‡ä»¶å  
         String filename = "downloadCSV";  
-        //±íÍ·Êı¾İ
+        //è¡¨å¤´æ•°æ®
         LinkedHashMap map = new LinkedHashMap();  
-        map.put("1", "·ÃÎÊÓÃ»§µÄÊÖ»úºÅÂë");  
-        map.put("2", "×îºóÒ»´Î·ÃÎÊµÄÊ±¼ä");  
+        map.put("1", "è®¿é—®ç”¨æˆ·çš„æ‰‹æœºå·ç ");  
+        map.put("2", "æœ€åä¸€æ¬¡è®¿é—®çš„æ—¶é—´");  
              		
-        String fileds[] = new String[] { "mTel", "mAddTime"};// ÉèÖÃÁĞÓ¢ÎÄÃû£¨Ò²¾ÍÊÇÊµÌåÀàÀïÃæ¶ÔÓ¦µÄÁĞÃû£©  
+        String fileds[] = new String[] { "mTel", "mAddTime"};// è®¾ç½®åˆ—è‹±æ–‡åï¼ˆä¹Ÿå°±æ˜¯å®ä½“ç±»é‡Œé¢å¯¹åº”çš„åˆ—åï¼‰  
         
         File file = CSVUtils.createCSVFile(cList, fileds, map, outPutPath,  
         		filename); 
-        //»ñÈ¡ÊäÈëÁ÷  
+        //è·å–è¾“å…¥æµ  
         InputStream bis = new BufferedInputStream(new FileInputStream(file));  
-        //×ªÂë£¬ÃâµÃÎÄ¼şÃûÖĞÎÄÂÒÂë  
+        //è½¬ç ï¼Œå…å¾—æ–‡ä»¶åä¸­æ–‡ä¹±ç   
         filename = URLEncoder.encode(filename,"UTF-8");  
-        //ÉèÖÃÎÄ¼şÏÂÔØÍ·  
+        //è®¾ç½®æ–‡ä»¶ä¸‹è½½å¤´  
         response.addHeader("Content-Disposition", "attachment;filename=" + file.getName());    
-        //1.ÉèÖÃÎÄ¼şContentTypeÀàĞÍ£¬ÕâÑùÉèÖÃ£¬»á×Ô¶¯ÅĞ¶ÏÏÂÔØÎÄ¼şÀàĞÍ    
+        //1.è®¾ç½®æ–‡ä»¶ContentTypeç±»å‹ï¼Œè¿™æ ·è®¾ç½®ï¼Œä¼šè‡ªåŠ¨åˆ¤æ–­ä¸‹è½½æ–‡ä»¶ç±»å‹    
         response.setContentType("multipart/form-data");   
         BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());  
         int len = 0;  
@@ -352,7 +353,7 @@ public class CountController {
         bis.close();
         out.close(); 
         
-        //É¾³ıÉú³ÉµÄÎÄ¼ş
+        //åˆ é™¤ç”Ÿæˆçš„æ–‡ä»¶
         deleteFile(file.getPath());
     }
     
@@ -360,7 +361,7 @@ public class CountController {
 		File deleteFile=new File(path);
         if (deleteFile!=null&&deleteFile.exists()) {
         	System.out.println(deleteFile.delete());
-        	System.out.println("É¾³ı³É¹¦£¡");
+        	System.out.println("åˆ é™¤æˆåŠŸï¼");
 		}
 	}  
 }

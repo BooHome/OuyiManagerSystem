@@ -111,11 +111,11 @@ form {
 </div>
 <form class="form-inline definewidth m20" action="searchuser" method="get">
 		开始时间：<input style="width: 130px;height: 30px;" type="date" name="startTime" id="startTime"
-			 value="" >&nbsp;&nbsp;
+			 value="${searchU['startTime']}" >&nbsp;&nbsp;
 		结束时间： <input style="width: 150px;height: 30px;" type="date" name="endTime" id="endTime"
-			 value="" >&nbsp;&nbsp;
+			 value="${searchU['endTime']}" >&nbsp;&nbsp;
 		<input type="text" name="keyName" id="keyName"
-			class="abc input-default" value="" placeholder="请输入手机号码">&nbsp;&nbsp;
+			class="abc input-default" value="${searchU['uTel']}" placeholder="请输入手机号码">&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">查询</button>
 	</form>
 	<table class="table table-bordered table-hover definewidth m10" style="margin-top: 20px;">
