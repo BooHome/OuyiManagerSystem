@@ -5,25 +5,24 @@ import java.util.Date;
 public class Count {
 	
 	private int id;
-	private String countName;
-	private String countUrl;
+	private int cpid;
+	private Product cpro;
 	private int pV;
 	private int uV;
-	private int CActivate;
 	private Date cAddTime;
 	
 	
-	public int getCActivate() {
-		return CActivate;
+	public int getCpid() {
+		return cpid;
 	}
-	public void setCActivate(int cActivate) {
-		CActivate = cActivate;
+	public void setCpid(int cpid) {
+		this.cpid = cpid;
 	}
-	public String getCountUrl() {
-		return countUrl;
+	public Product getCpro() {
+		return cpro;
 	}
-	public void setCountUrl(String countUrl) {
-		this.countUrl = countUrl;
+	public void setCpro(Product cpro) {
+		this.cpro = cpro;
 	}
 	public int getPV() {
 		return pV;
@@ -43,12 +42,6 @@ public class Count {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCountName() {
-		return countName;
-	}
-	public void setCountName(String countName) {
-		this.countName = countName;
-	}
 	public Date getCAddTime() {
 		return cAddTime;
 	}
@@ -57,8 +50,7 @@ public class Count {
 	}
 	@Override
 	public String toString() {
-		return "Count [id=" + id + ", countName=" + countName + ", pV=" + pV + ", uV=" + uV + ", cAddTime=" + cAddTime
-				+ "]";
+		return "Count [id=" + id + ", cpid=" + cpid + ", cpro=" + cpro + ", pV=" + pV + ", uV=" + uV + ", cAddTime="
+				+ cAddTime + "]";
 	}
-	
 }

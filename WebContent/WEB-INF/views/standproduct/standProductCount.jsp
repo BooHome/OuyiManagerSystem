@@ -116,6 +116,7 @@ form {
 			 value="${searchR['startTime']}" >&nbsp;&nbsp;
 		结束时间： <input style="width: 150px;height: 30px;" type="date" name="endTime" id="endTime"
 			 value="${searchR['endTime']}" >&nbsp;&nbsp;
+		独立产品的名称：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${searchR['countName']}" placeholder="请输入独立产品名称">&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">查询</button>

@@ -18,11 +18,8 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductDAO productDao;
 	
-	@Autowired
-	RegistDAO registDao;
-	
 	/**
-	 * 查询列表
+	 * 鏌ヨ鍒楄〃
 	 * 
 	 */
 	public List<Product> queryList(Product product) {
@@ -32,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	/**
-	 * 通过idList删除
+	 * 閫氳繃idList鍒犻櫎
 	 */
 	public int delete(List<Product> idList) {
 		int row = productDao.delete(idList);
@@ -41,20 +38,15 @@ public class ProductServiceImpl implements ProductService {
 
 	
 	/**
-	 * 更新
+	 * 鏇存柊
 	 */
 	public int update(Product product) {
-		Count proCount=new Count();
-		proCount.setCountName(product.getPTitle());
-		proCount.setCActivate(product.getPActivate());
-		proCount.setCAddTime(new Date());
-		int result=registDao.update(proCount);
 		int row = productDao.update(product);
 		return row;
 	}
 	
 	/**
-	 * 添加
+	 * 娣诲姞
 	 */
 	public int add(Product product) {
 		int row = productDao.add(product);
@@ -62,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	/**
-	 * 通过Id查询产品
+	 * 閫氳繃Id鏌ヨ浜у搧
 	 */
 	public Product selectById(int id) {
 		Product pro = new Product();

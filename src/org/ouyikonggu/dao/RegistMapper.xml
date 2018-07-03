@@ -5,34 +5,44 @@
 	<mapper namespace="org.ouyikonggu.dao.RegistDAO">
 	<resultMap id="countMap" type="Count" >  
 		<id column="id"  property="id" />
-        <result column="pTitle" property="countName"/>  
+         <result column="cpId" property="cpid"/>
         <result column="pV" property="pV"/>
         <result column="uV" property="uV"/>
-        <result column="CActivate" property="CActivate"/>
         <result column="cAddTime" property="cAddTime"/>
+     <association property="cpro" javaType="Product">
+        	<id column="pid"  property="id" />
+        <result column="pTitle" property="pTitle"/>  
+        <result column="pcid" property="pcid"/>
+        <result column="pActivate" property="pActivate"/>
+        </association>   
     </resultMap>  
     
 	  <select id="queryRegist" parameterType="java.util.HashMap" resultMap="countMap">
-	      select * from co_regist  
+	      select  
+	 		a.*,b.*
+	 		from co_regist  as  a  left join co_products as b  on  a.cpId = b.pid  
 	        <where>
-	     		  1=1
+	     		  a.id!='' and  a.id is not NULL	
 	        	   <if test="startTime!=null and !&quot;&quot;.equals(startTime.trim())">  
-         				and cAddTime >=#{startTime}    
+         				and a.cAddTime >=#{startTime}    
        				</if>  
 				    <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">  
-				        and  cAddTime &lt;=#{endTime}  
+				        and  a.cAddTime &lt;=#{endTime}  
 				    </if>  
 				     <if test="pTitle!=null and !&quot;&quot;.equals(pTitle.trim())">  
-				        and  pTitle like "%"#{pTitle}"%" 
+				        and  b.pTitle like "%"#{pTitle}"%" 
+				    </if>  
+				    <if test="pcId!=null and pcId!=''">  
+				        and  b.pcid=#{pcId}
 				    </if>  
 				    <if test="CActivate!=null">  
-				        and  CActivate=#{CActivate}
+				        and  b.pActivate=#{CActivate}
 				    </if>  
 	        </where>
 	  </select>
 	  
 	<insert id="add"  parameterType="Count">
-		insert into co_regist   (pTitle,pV,uV,cAddTime,CActivate) values (#{countName},#{pV},#{uV},NOW(),#{CActivate});
+		insert into co_regist   (cpId,pV,uV,cAddTime) values (#{cpid},#{pV},#{uV},NOW());
 	</insert>    
 	
 	 <update id="update" parameterType="Count" >
@@ -44,10 +54,7 @@
 			      <if test="uV != null" >  
 			       , uV = #{uV}
 			     </if>  
-			     <if test="CActivate != null" >  
-			       , CActivate = #{CActivate}
-			     </if>  
             </set>
-            where pTitle = #{countName} and DATE(cAddTime)=DATE(#{cAddTime} )
+            where cpId = #{cpid} and DATE(cAddTime)=DATE(#{cAddTime} )
         </update>
 	</mapper>

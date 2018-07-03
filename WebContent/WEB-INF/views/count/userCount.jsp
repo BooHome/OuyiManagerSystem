@@ -114,6 +114,7 @@ form {
 			 value="${searchU['startTime']}" >&nbsp;&nbsp;
 		结束时间： <input style="width: 150px;height: 30px;" type="date" name="endTime" id="endTime"
 			 value="${searchU['endTime']}" >&nbsp;&nbsp;
+		手机号码：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${searchU['uTel']}" placeholder="请输入手机号码">&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">查询</button>

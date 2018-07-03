@@ -130,6 +130,7 @@ form {
 <div style="float: right;margin-right: 50px;margin-top: 25px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
 </div>
 	<form class="form-inline definewidth m20" action="searchslides" method="get">
+	幻灯名称：
     <input type="text" name="keyName" id="keyName"class="abc input-default" value="${sd.STitle}" placeholder="请输入幻灯名称">&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary">查询</button>
 </form>

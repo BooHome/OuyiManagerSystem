@@ -116,15 +116,18 @@ form {
 		开始时间：<input style="width: 130px;height: 30px;" type="date" name="startTime" id="startTime"
 			 value="${searchR['startTime']}" >&nbsp;&nbsp;
 		结束时间： <input style="width: 150px;height: 30px;" type="date" name="endTime" id="endTime"
-			 value="${searchR['endTime']}" >&nbsp;&nbsp;
+			 value="${searchR['endTime']}" >&nbsp;&nbsp;产品名称：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${searchR['pTitle']}" placeholder="请输入产品名称">&nbsp;&nbsp;
+			分站ID：
+		<input type="text" name="pcId" id="pcId"
+			class="abc input-default" value="${searchR['pcId']}" placeholder="请输入分站ID">
 		<button type="submit" class="btn btn-primary">查询</button>
 	</form>
 	<table class="table table-bordered table-hover definewidth m10" style="margin-top: 20px;">
     <thead>
     <tr>
-       
+       <th>分站Id</th>
         <th>产品名称</th>
         <th>产品访问量（PV）</th>
         <th>访问用户量（UV）</th>
@@ -135,9 +138,10 @@ form {
     </thead>
 		<c:forEach items="${pageInfo.list}" var="count" varStatus="st">
 			<tr>
-				<td>${count.countName}</td>
+				<td>${count.cpro.pcid}</td>
+				<td>${count.cpro.PTitle}</td>
 				<td>${count.PV}</td>
-				<td><a href="registerPhone?pageNum=1&pTitle=${count.countName}">${count.UV}</a></td>
+				<td><a href="registerPhone?pageNum=1&pId=${count.cpid}">${count.UV}</a></td>
 				<td><fmt:formatDate value="${count.CAddTime}"	pattern="yyyy年MM月dd日" /></td>
 			</tr>
 		</c:forEach>

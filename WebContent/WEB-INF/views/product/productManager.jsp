@@ -130,6 +130,7 @@ form {
 <div style="float: right;margin-right: 50px;margin-top: 25px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
 </div>
 	<form class="form-inline definewidth m20" action="searchproduct" method="get">
+		产品名称：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${searchp.PTitle}" placeholder="请输入产品名称">&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">查询</button>
@@ -138,6 +139,7 @@ form {
 		style="margin-top: 20px;text-align:center;">
 		<thead>
 			<tr>
+				<th >所属分站ID</th>
 				<th >所属分站</th>
 				<th>名称</th>
 				<th>最高额度</th>
@@ -156,6 +158,7 @@ form {
 			<c:forEach items="${pageInfo.list}" var="p" varStatus="st">
 				<c:if test="${p.PTitle != null}">
 					<tr>
+					<td>${p.productClass.id}</td>
 					<td>${p.productClass.CName}</td>
 					<td>${p.PTitle}</td>
 					<td>${p.PED}</td>

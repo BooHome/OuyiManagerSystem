@@ -35,32 +35,32 @@ public class CountServiceImpl implements CountService {
 	@Autowired
 	UserDAO userDao;
 	
-	//ÊµÊ±Í³¼Æ²úÆ·µÄÇé¿ö£¬²¢¸üĞÂµ½Êı¾İ¿âÖĞ
+	//å®æ—¶ç»Ÿè®¡äº§å“çš„æƒ…å†µï¼Œå¹¶æ›´æ–°åˆ°æ•°æ®åº“ä¸­
 	@SuppressWarnings("deprecation")
 	@Override
 	public int queryCount() {
 		int result=0;
 		List<Product> proList = new ArrayList<Product>();
-		List<Count> countList = new ArrayList<Count>();  //Í³¼ÆµÄ½á¹û¼¯
-		List<Count> exitsCountList = registDao.queryRegist(null);//¿âÖĞÒÑ¾­ÓĞµÄ½á¹û¼¯
-		proList = productDao.queryList(null);  //²éÑ¯ËùÓĞµÄ²úÆ·
+		List<Count> countList = new ArrayList<Count>();  //ç»Ÿè®¡çš„ç»“æœé›†
+		List<Count> exitsCountList = registDao.queryRegist(null);//åº“ä¸­å·²ç»æœ‰çš„ç»“æœé›†
+		proList = productDao.queryList(null);  //æŸ¥è¯¢æ‰€æœ‰çš„äº§å“
 
 		for(Iterator iter=proList.iterator();iter.hasNext();){
 			Product pr = (Product) iter.next();
 			Count count = new Count();
 			int id = pr.getId();
+			count.setCpid(id);
+			count.setCpro(pr);
 			count.setUV(memberDAo.queryUV(id));
 			count.setPV(memberDAo.queryPV(id));
-			count.setCountName(pr.getPTitle());
-			count.setCActivate(pr.getPActivate());
 			countList.add(count);
 		}
 		
-		//×¢ÒâÌø³öË«²ãÑ­»·µÄÌõ¼ş
+		//æ³¨æ„è·³å‡ºåŒå±‚å¾ªç¯çš„æ¡ä»¶
 		for (Count count : countList) {
 			int flag=0;
 			for (Count exitsCount : exitsCountList) {
-				if (exitsCount.getCountName().equals(count.getCountName()) 
+				if (exitsCount.getCpid()==count.getCpid()
 						&& DateUtil.getDate(exitsCount.getCAddTime()).equals(DateUtil.getDate(new Date())) ) {
 					count.setCAddTime(new Date());
 					result=update(count);
@@ -77,7 +77,7 @@ public class CountServiceImpl implements CountService {
 	}
 
 
-	//¸ù¾İ´«ÈëµÄ²éÑ¯Ìõ¼ş²éÑ¯²úÆ·µÄÍ³¼Æ½á¹û
+	//æ ¹æ®ä¼ å…¥çš„æŸ¥è¯¢æ¡ä»¶æŸ¥è¯¢äº§å“çš„ç»Ÿè®¡ç»“æœ
 	@Override
 	public List<Count> queryRegist(Map map) {
 		List<Count> countList = new ArrayList<Count>();
@@ -85,14 +85,14 @@ public class CountServiceImpl implements CountService {
 		return countList;
 	}
 	
-	//ĞÂÔöÍ³¼Æ½á¹û
+	//æ–°å¢ç»Ÿè®¡ç»“æœ
 	@Override
 	public int add(Count count) {
 		int row=registDao.add(count);
 		return row;
 	}
 
-	//ĞŞ¸ÄÍ³¼Æ½á¹û
+	//ä¿®æ”¹ç»Ÿè®¡ç»“æœ
 	@Override
 	public int update(Count count) {
 		int row=registDao.update(count);
@@ -100,20 +100,20 @@ public class CountServiceImpl implements CountService {
 	}
 
 	
-	//²éÑ¯Ä³²úÆ·ÏÂËùÓĞ×¢²áÓÃ»§
+	//æŸ¥è¯¢æŸäº§å“ä¸‹æ‰€æœ‰æ³¨å†Œç”¨æˆ·
 	@Override
 	public List<Member> selectMemberByPid(int pid) {
 		 List<Member> mList=memberDAo.selectMemberByPid(pid);
 		return mList;
 	}
 
-	//ÊµÊ±Í³¼ÆÓÃ»§µÄÇé¿ö£¬²¢¸üĞÂµ½Êı¾İ¿âÖĞ
+	//å®æ—¶ç»Ÿè®¡ç”¨æˆ·çš„æƒ…å†µï¼Œå¹¶æ›´æ–°åˆ°æ•°æ®åº“ä¸­
 	@Override
 	public List<User> selectMember() {
 		List<Member> mList=memberDAo.queryList();
-		List<User> exitsUList=userDao.queryUser(null);//ÒÑ´æÔÚµÄuser
+		List<User> exitsUList=userDao.queryUser(null);//å·²å­˜åœ¨çš„user
 		List<User> uList=new ArrayList<>();
-		//¸üĞÂÓÃ»§±íÖĞµÄmtel
+		//æ›´æ–°ç”¨æˆ·è¡¨ä¸­çš„mtel
 		for (Member member : mList) {
 			User user=new User();
 			user.setUTel(member.getMTel());
@@ -141,7 +141,7 @@ public class CountServiceImpl implements CountService {
 		return uList;
 	}
 
-	//¸ù¾İ´«ÈëµÄ²éÑ¯Ìõ¼ş²éÑ¯²úÆ·µÄÍ³¼Æ½á¹û
+	//æ ¹æ®ä¼ å…¥çš„æŸ¥è¯¢æ¡ä»¶æŸ¥è¯¢äº§å“çš„ç»Ÿè®¡ç»“æœ
 	@Override
 	public List<User> queryUser(Map map) {
 		List<User> uList=new ArrayList<>();
@@ -149,7 +149,7 @@ public class CountServiceImpl implements CountService {
 		return uList;
 	}
 
-   //ÓÃ»§·ÃÎÊ²úÆ·ÏêÇé
+   //ç”¨æˆ·è®¿é—®äº§å“è¯¦æƒ…
 	@Override
 	public List<UserProduct> selectMemberByPhone(String mTel) {
 		List<Member> mList=memberDAo.selectPidByPhone(mTel);

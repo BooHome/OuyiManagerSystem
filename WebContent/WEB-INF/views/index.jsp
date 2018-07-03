@@ -982,10 +982,6 @@ out.println(request.getAttribute("tip"));
 							class="glyphicon glyphicon-registration-mark"></span> 独立产品统计
 					</a></li>
 				</ul></li>
-		<div class="attribution">
-			CopyRight@2018-Collect from<br /> <a href="http://www.ouyisms.com/"
-				title="广东欧一控股有限公司" target="_blank">广东欧一控股有限公司</a>
-		</div>
 		</ul>
 	</div>
 	<!--/左侧菜单栏-->

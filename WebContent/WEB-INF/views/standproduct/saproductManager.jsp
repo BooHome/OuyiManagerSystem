@@ -135,6 +135,7 @@ form {
 </div>
 	<form class="form-inline definewidth m20" action="searchSaproduct"
 		method="get">
+		独立产品的名称：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${searchSap.sapName}" placeholder="请输入独立产品的名称">&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">查询</button>

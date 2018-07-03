@@ -136,6 +136,7 @@ form {
 </div>
 	<form class="form-inline definewidth m20" action="searchclassify"
 		method="get">
+		分站名称：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${serchPc.CName}" placeholder="请输入分站名称">&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">查询</button>
@@ -143,8 +144,9 @@ form {
 	<table class="table table-bordered table-hover definewidth m10">
 		<thead>
 			<tr>
+				<th>分站ID</th>
 				<th>名称</th>
-
+				
 				<th>排序</th>
 				<th>推广地址</th>
 				<th>操作</th>
@@ -152,6 +154,7 @@ form {
 		</thead>
 		<c:forEach items="${pageInfo.list}" var="pc" varStatus="st">
 			<tr>
+				<td>${pc.id}</td>
 				<td>${pc.CName}</td>
 				<td>${pc.CSort}</td>
 				<td>http://sj.ouyisms.com/WebH5/index.html?pcId=${pc.id}</td>

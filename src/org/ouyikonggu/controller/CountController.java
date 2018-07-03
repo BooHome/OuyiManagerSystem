@@ -77,8 +77,8 @@ public class CountController {
 	@RequestMapping("registerPhone")
 	public ModelAndView registerPhone(HttpServletRequest req){
 		int pageNum=Integer.parseInt(req.getParameter("pageNum"));
-		String pTitle=req.getParameter("pTitle");
-		Product rProduct=psi.selectByTitle(pTitle);
+		String pId=req.getParameter("pId");
+		Product rProduct=psi.selectById(Integer.parseInt(pId));
 		
 		// 导出下载文件数据
 		List<Member> dmList=csi.selectMemberByPid(rProduct.getId());
@@ -91,7 +91,6 @@ public class CountController {
 		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以  
 	    PageInfo pageInfo = new PageInfo<>(mList,19);  
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("pTitle",pTitle);
 		mav.addObject("pageInfo",pageInfo);
 		mav.setViewName("count/registerPhone");
 		return mav;
@@ -104,14 +103,17 @@ public class CountController {
 		String name = requst.getParameter("keyName");
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
+		String pcId=requst.getParameter("pcId");
 		
-		if (name.equals("")&&startTime.equals("") && endTime.equals("")) {
+		if (name.equals("")&&startTime.equals("") && endTime.equals("")&& pcId.equals("")) {
 			startTime=DateUtil.getDate(new Date());
 		}
+		System.err.println("在这里："+pcId);
 		Map searchR=new HashMap<>();
 		searchR.put("startTime", startTime);
 		searchR.put("endTime", endTime);
 		searchR.put("pTitle", name);
+		searchR.put("pcId", pcId);
 		
 		// 导出下载文件数据
 		List<Count> dcList=csi.queryRegist(searchR);
