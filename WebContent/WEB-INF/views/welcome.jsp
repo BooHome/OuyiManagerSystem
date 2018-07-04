@@ -153,9 +153,11 @@
 						console.log(data);
 						if(data){
 							for (var i = 0; i < data.length; i++) {
-								names.push(data[i].cpro.PTitle);
-								pvs.push(data[i].PV);
-								uvs.push(data[i].UV);
+								if(data[i].cpro != null){
+									names.push(data[i].cpro.PTitle);
+									pvs.push(data[i].PV);
+									uvs.push(data[i].UV);
+								}
 							}
 							  myChart.hideLoading();    //隐藏加载动画
 			                    myChart.setOption({        //加载数据图表

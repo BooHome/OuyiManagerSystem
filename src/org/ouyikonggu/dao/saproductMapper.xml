@@ -43,7 +43,7 @@
 	  </select>
 	  
 	<insert id="add"  parameterType="Count">
-		insert into co_saproduct   (saProductId,PV,UV,cAddTime) values (#{sapId},#{PV},#{UV},NOW());
+		insert into co_saproduct  (saProductId,PV,UV,cAddTime) values (#{sapId},#{PV},#{UV},NOW());
 	</insert>    
 	
 	 <update id="update" parameterType="Count" >

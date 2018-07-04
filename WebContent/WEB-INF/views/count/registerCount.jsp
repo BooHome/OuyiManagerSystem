@@ -127,7 +127,7 @@ form {
 	<table class="table table-bordered table-hover definewidth m10" style="margin-top: 20px;">
     <thead>
     <tr>
-       <th>分站Id</th>
+       <th>所属分站Id</th>
         <th>产品名称</th>
         <th>产品访问量（PV）</th>
         <th>访问用户量（UV）</th>

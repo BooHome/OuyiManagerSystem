@@ -15,19 +15,19 @@ import org.ouyikonggu.moudel.Slides;
 
 public class CSVUtils {  
     /** 
-     * Éú³ÉÎªCVSÎÄ¼ş 
+     * ç”Ÿæˆä¸ºCVSæ–‡ä»¶ 
      * @param <T>
      * @param <T>
      *  
      * @param exportData 
-     *            Ô´Êı¾İList 
+     *            æºæ•°æ®List 
      * @param fileds 
      * @param map 
-     *            csvÎÄ¼şµÄÁĞ±íÍ·map 
+     *            csvæ–‡ä»¶çš„åˆ—è¡¨å¤´map 
      * @param outPutPath 
-     *            ÎÄ¼şÂ·¾¶ 
+     *            æ–‡ä»¶è·¯å¾„ 
      * @param fileName 
-     *            ÎÄ¼şÃû³Æ 
+     *            æ–‡ä»¶åç§° 
      * @return 
      */  
 	 public static  <T> File createCSVFile(List <T>exportData, String[] fileds,  
@@ -39,15 +39,15 @@ public class CSVUtils {
 	            if (!file.exists()) {  
 	                file.mkdir();  
 	            }  
-			// ¶¨ÒåÎÄ¼şÃû¸ñÊ½²¢´´½¨  
+			// å®šä¹‰æ–‡ä»¶åæ ¼å¼å¹¶åˆ›å»º  
             csvFile = File.createTempFile(fileName, ".csv", file);  
-			// UTF-8Ê¹ÕıÈ·¶ÁÈ¡·Ö¸ô·û","
+			// UTF-8ä½¿æ­£ç¡®è¯»å–åˆ†éš”ç¬¦","
 			csvFileOutputStream = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(csvFile), "UTF-8"),1024);
-			 System.out.println("csvFileOutputStream£º" + csvFileOutputStream);  
-			 //ÊÖ¶¯¼ÓÈëBOM,½â¾öUTF-8ÂÒÂëÎÊÌâ
+			 System.out.println("csvFileOutputStreamï¼š" + csvFileOutputStream);  
+			 //æ‰‹åŠ¨åŠ å…¥BOM,è§£å†³UTF-8ä¹±ç é—®é¢˜
 			 csvFileOutputStream.write(new String(new byte[] { (byte) 0xEF, (byte) 0xBB,(byte) 0xBF }, "UTF-8"));  
-			// Ğ´ÈëÎÄ¼şÍ·²¿
+			// å†™å…¥æ–‡ä»¶å¤´éƒ¨
 			for (Iterator propertyIterator = map.entrySet().iterator(); propertyIterator.hasNext();) {
 				java.util.Map.Entry propertyEntry = (java.util.Map.Entry) propertyIterator.next();
 				csvFileOutputStream.write((String) propertyEntry.getValue() != null
@@ -58,8 +58,8 @@ public class CSVUtils {
 				}
 			}
 			csvFileOutputStream.write("\r\n");
-			// Ğ´ÈëÎÄ¼şÄÚÈİ,  
-			// ============ //µÚÒ»ÖÖ¸ñÊ½£ºArraylist<ÊµÌåÀà>Ìî³äÊµÌåÀàµÄ»ù±¾ĞÅÏ¢==================
+			// å†™å…¥æ–‡ä»¶å†…å®¹,  
+			// ============ //ç¬¬ä¸€ç§æ ¼å¼ï¼šArraylist<å®ä½“ç±»>å¡«å……å®ä½“ç±»çš„åŸºæœ¬ä¿¡æ¯==================
 			for (int j = 0; exportData != null && !exportData.isEmpty() && j < exportData.size(); j++) {
 				T t = (T) exportData.get(j);
 				Class clazz = t.getClass();
@@ -67,7 +67,7 @@ public class CSVUtils {
 				for (int i = 0; fileds != null && i < fileds.length; i++) {
 					String filedName = toUpperCaseFirstOne(fileds[i]);
 					Method method = clazz.getMethod(filedName);
-					method.setAccessible(true); //¹¦ÄÜÊÇÆôÓÃ»ò½ûÓÃ°²È«¼ì²é£¬Ìá¸ßĞÔÄÜ
+					method.setAccessible(true); //åŠŸèƒ½æ˜¯å¯ç”¨æˆ–ç¦ç”¨å®‰å…¨æ£€æŸ¥ï¼Œæé«˜æ€§èƒ½
 					Object obj = method.invoke(t);
 					String str = String.valueOf(obj);
 					if (str == null || str.equals("null")) {
@@ -78,7 +78,7 @@ public class CSVUtils {
 				}
 
 				for (int n = 0; n < contents.length; n++) {
-					// ½«Éú³ÉµÄµ¥Ôª¸ñÌí¼Óµ½¹¤×÷±íÖĞ
+					// å°†ç”Ÿæˆçš„å•å…ƒæ ¼æ·»åŠ åˆ°å·¥ä½œè¡¨ä¸­
 					csvFileOutputStream.write(contents[n]);
 					csvFileOutputStream.write(",");
 
@@ -99,7 +99,7 @@ public class CSVUtils {
 	 }
 	 
 	/**
-	 * ½«µÚÒ»¸ö×ÖÄ¸×ª»»Îª´óĞ´×ÖÄ¸²¢ºÍgetÆ´ºÏ³É·½·¨
+	 * å°†ç¬¬ä¸€ä¸ªå­—æ¯è½¬æ¢ä¸ºå¤§å†™å­—æ¯å¹¶å’Œgetæ‹¼åˆæˆæ–¹æ³•
 	 * 
 	 * @param origin
 	 * @return
@@ -112,15 +112,15 @@ public class CSVUtils {
 	}
 	
 	public static void main(String[] args) {
-		 // =======¸Ä³ÉlistµÄ¸ñÊ½£¬Ö§³Ö£¨Arraylist´«ÈëÊµÌåÀàµÄĞÎÊ½£©£¬¸ÄÔìµÄ·½·¨============  
+		 // =======æ”¹æˆlistçš„æ ¼å¼ï¼Œæ”¯æŒï¼ˆArraylistä¼ å…¥å®ä½“ç±»çš„å½¢å¼ï¼‰ï¼Œæ”¹é€ çš„æ–¹æ³•============  
         ArrayList<Slides> bankWageList = new ArrayList<Slides>();  
         Slides pc1 = new Slides();
-        pc1.setSTitle("Ò»Äê");
+        pc1.setSTitle("ä¸€å¹´");
         pc1.setScid(1);
         pc1.setSTitleImg("sadasdsaddsa");
         
         Slides pc2= new Slides();
-        pc2.setSTitle("Ò»Äê");
+        pc2.setSTitle("ä¸€å¹´");
         pc2.setScid(1);
         pc2.setSTitleImg("sadasdsaddsa");
         
@@ -128,16 +128,16 @@ public class CSVUtils {
         bankWageList.add(pc2);
         
         LinkedHashMap map = new LinkedHashMap();  
-        map.put("1", "Ãû³Æ");  
-        map.put("2", "ÅÅĞò");  
-        map.put("3", "ÍÆ¹ãµØÖ·");  
+        map.put("1", "åç§°");  
+        map.put("2", "æ’åº");  
+        map.put("3", "æ¨å¹¿åœ°å€");  
         
         String path = "D://export//";  
-        String fileName = "ÎÄ¼şµ¼³ö";  
-        String fileds[] = new String[] { "STitle", "Scid","STitleImg"};// ÉèÖÃÁĞÓ¢ÎÄÃû£¨Ò²¾ÍÊÇÊµÌåÀàÀïÃæ¶ÔÓ¦µÄÁĞÃû£©  
+        String fileName = "æ–‡ä»¶å¯¼å‡º";  
+        String fileds[] = new String[] { "STitle", "Scid","STitleImg"};// è®¾ç½®åˆ—è‹±æ–‡åï¼ˆä¹Ÿå°±æ˜¯å®ä½“ç±»é‡Œé¢å¯¹åº”çš„åˆ—åï¼‰  
         File file = CSVUtils.createCSVFile(bankWageList, fileds, map, path,  
                 fileName);  
         String fileName2 = file.getName();  
-        System.out.println("ÎÄ¼şÃû³Æ£º" + fileName2);  
+        System.out.println("æ–‡ä»¶åç§°ï¼š" + fileName2);  
 	}
 }  

@@ -107,7 +107,7 @@ form {
 </head>
 
 <body>
-<div style="float: right;margin-right: 50px;margin-top: 25px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
+<div style="float: right;margin-right: 50px;margin-top: 25px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile2" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
 </div>
 <form class="form-inline definewidth m20" action="searchuser" method="get">
 		开始时间：<input style="width: 130px;height: 30px;" type="date" name="startTime" id="startTime"

@@ -1,8 +1,5 @@
 package org.ouyikonggu.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.ouyikonggu.service.CountService;
 import org.ouyikonggu.service.SaProductService;
 import org.springframework.beans.factory.annotation.Autowired;

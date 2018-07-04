@@ -39,17 +39,17 @@ public class SlidesController {
 	@Autowired
 	ProductClassServiceImpl pcs;
 	
-	//»ÃµÆ¹ÜÀí
+	//å¹»ç¯ç®¡ç†
 	@RequestMapping("slidesManager")
 	public ModelAndView slidesManager(HttpServletRequest request){
 		int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 		
 		ModelAndView mav = new ModelAndView();
 		
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<Slides> dsList=ssi.queryList(null);
 		request.getSession().setAttribute("download", dsList);
-//		ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+//		å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(pageNum,19);
 	    
 		List<Slides> sList=ssi.queryList(null);
@@ -57,14 +57,14 @@ public class SlidesController {
 			System.out.println(slides);
 		}
 		
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(sList,19);  
 		mav.addObject("pageInfo",pageInfo);
 		mav.setViewName("slides/slidesManager");
 		return mav;
 	}
 			
-	//ĞÂÔö»ÃµÆÒ³Ãæ
+	//æ–°å¢å¹»ç¯é¡µé¢
 	@RequestMapping("addSlidesPage")
 	public ModelAndView addSlidesPage(){
 		ModelAndView mav = new ModelAndView();
@@ -74,10 +74,10 @@ public class SlidesController {
 		return mav;
 	}
 			
-	//ĞÂÔö»ÃµÆ
+	//æ–°å¢å¹»ç¯
 	@RequestMapping(value="addslides",method=RequestMethod.POST)
 	public void addSlides(@RequestParam("sTitleImg") CommonsMultipartFile file,HttpServletRequest requst,HttpServletResponse response) throws Exception{
-		System.out.println("ÉÏ´«¹ıÀ´µÄÍ¼Æ¬"+file.getOriginalFilename());
+		System.out.println("ä¸Šä¼ è¿‡æ¥çš„å›¾ç‰‡"+file.getOriginalFilename());
 		String sTitle=requst.getParameter("sTitle");
 		String sSort=requst.getParameter("sSort");
 		String scid=requst.getParameter("scid");
@@ -86,15 +86,15 @@ public class SlidesController {
 		slide.setProductClass(pcs.selectById(Integer.parseInt(scid)));
 		slide.setSTitle(sTitle);
 		slide.setSSort(sSort);
-		System.out.println("»ñÈ¡¹ıÀ´µÄÊı¾İ£º"+slide);
+		System.out.println("è·å–è¿‡æ¥çš„æ•°æ®ï¼š"+slide);
 		
-		//ÉÏ´«Ñ¡ÔñÍ¼Æ¬
+		//ä¸Šä¼ é€‰æ‹©å›¾ç‰‡
 		String webPath=requst.getSession().getServletContext().getRealPath("data/slide/");
 		String fileName=new Date().getTime() + file.getOriginalFilename();
 		String path = webPath + fileName;
 		File uploadFile=new File(path);
         file.transferTo(uploadFile);
-        System.out.println("Í¼Æ¬ÉÏ´«³É¹¦:"+path);
+        System.out.println("å›¾ç‰‡ä¸Šä¼ æˆåŠŸ:"+path);
         
         slide.setSTitleImg("http://sj.ouyisms.com/OuyiManagerSystem/data/slide/"+fileName);
 		int result=ssi.add(slide);
@@ -107,7 +107,7 @@ public class SlidesController {
 		}
 	}
 
-	//²éÑ¯Ò³Ãæ
+	//æŸ¥è¯¢é¡µé¢
 	@RequestMapping(value="searchslides",method=RequestMethod.GET)
 	public ModelAndView searchSlides(HttpServletRequest requst){
 		String name=requst.getParameter("keyName");
@@ -115,17 +115,17 @@ public class SlidesController {
 		Slides sd=new Slides();
 		sd.setSTitle(name);
 		
-		// µ¼³öÏÂÔØÎÄ¼şÊı¾İ
+		// å¯¼å‡ºä¸‹è½½æ–‡ä»¶æ•°æ®
 		List<Slides> dsList=ssi.queryList(sd);
 		requst.getSession().setAttribute("download", dsList);
-		//	ÒıÈë·ÖÒ³²éÑ¯£¬Ê¹ÓÃPageHelper·ÖÒ³¹¦ÄÜ ;ÔÚ²éÑ¯Ö®Ç°´«Èëµ±Ç°Ò³£¬È»ºó¶àÉÙ¼ÇÂ¼  
+		//	å¼•å…¥åˆ†é¡µæŸ¥è¯¢ï¼Œä½¿ç”¨PageHelperåˆ†é¡µåŠŸèƒ½ ;åœ¨æŸ¥è¯¢ä¹‹å‰ä¼ å…¥å½“å‰é¡µï¼Œç„¶åå¤šå°‘è®°å½•  
 	    PageHelper.startPage(1,19);  
 		List<Slides> sList=ssi.queryList(sd);
 		for (Slides slides : sList) {
 			System.out.println(slides);
 		}
 		
-		//Ê¹ÓÃPageInfo°ü×°²éÑ¯½á¹û£¬Ö»ĞèÒª½«pageInfo½»¸øÒ³Ãæ¾Í¿ÉÒÔ  
+		//ä½¿ç”¨PageInfoåŒ…è£…æŸ¥è¯¢ç»“æœï¼Œåªéœ€è¦å°†pageInfoäº¤ç»™é¡µé¢å°±å¯ä»¥  
 	    PageInfo pageInfo = new PageInfo<>(sList,19);
 		mav.addObject("sd",sd);
 		mav.addObject("pageInfo",pageInfo);
@@ -133,13 +133,13 @@ public class SlidesController {
 		return mav;
 	}
 			
-	//É¾³ı»ÃµÆ
+	//åˆ é™¤å¹»ç¯
 	@RequestMapping(value="deleteslides",method=RequestMethod.GET)
 	public void deleteSlides(@RequestParam("s")int deleteSId,HttpServletRequest requst, HttpServletResponse response) throws Exception{
 		Slides sd=new Slides();
 		sd=ssi.selectById(deleteSId);
 		
-		//É¾³ıÒÑ¾­ÉÏ´«µÄÎÄ¼ş
+		//åˆ é™¤å·²ç»ä¸Šä¼ çš„æ–‡ä»¶
 		String webPath=requst.getSession().getServletContext().getRealPath("data/slide/");
 		String fileName=StringUtils.substringAfter(sd.getSTitleImg(), "http://sj.ouyisms.com/OuyiManagerSystem/data/slide/");
 		System.out.println(webPath+fileName);
@@ -154,7 +154,7 @@ public class SlidesController {
 		response.sendRedirect("slidesManager?pageNum=1");
 	}
 			
-	//ĞŞ¸ÄÒ³ÃæÌø×ª
+	//ä¿®æ”¹é¡µé¢è·³è½¬
 	@RequestMapping(value="updateSlidesJump",method=RequestMethod.GET)
 	public ModelAndView updateSlidesJump(@RequestParam("s")int updateSId,HttpServletResponse response) throws Exception{
 		Slides updateS=ssi.selectById(updateSId);
@@ -167,10 +167,10 @@ public class SlidesController {
 		return mav;
 	}
 			
-	//ĞŞ¸Ä»ÃµÆ
+	//ä¿®æ”¹å¹»ç¯
 	@RequestMapping(value="updateslides",method=RequestMethod.POST)
 	public void updateSlides(@RequestParam("sTitleImg") CommonsMultipartFile file,HttpServletRequest requst,HttpServletResponse response) throws Exception{
-		System.out.println("ÉÏ´«¹ıÀ´µÄÍ¼Æ¬"+file.getOriginalFilename());
+		System.out.println("ä¸Šä¼ è¿‡æ¥çš„å›¾ç‰‡"+file.getOriginalFilename());
 		String id=requst.getParameter("id");
 		String sTitle=requst.getParameter("sTitle");
 		String sSort=requst.getParameter("sSort");
@@ -186,13 +186,13 @@ public class SlidesController {
 		if (file.getSize()==0) {
 			slide.setSTitleImg(orgImg);
 		}else{			
-			//ÉÏ´«Ñ¡ÔñÍ¼Æ¬
+			//ä¸Šä¼ é€‰æ‹©å›¾ç‰‡
 			String webPath=requst.getSession().getServletContext().getRealPath("data/slide/");
 			String fileName=new Date().getTime() + file.getOriginalFilename();
 			String path = webPath + fileName;
 			File uploadFile=new File(path);
 	        file.transferTo(uploadFile);
-	        System.out.println("Í¼Æ¬ÉÏ´«³É¹¦:"+path);
+	        System.out.println("å›¾ç‰‡ä¸Šä¼ æˆåŠŸ:"+path);
 	        
 	        slide.setSTitleImg("http://sj.ouyisms.com/OuyiManagerSystem/data/slide/"+fileName);
 		}
@@ -208,7 +208,7 @@ public class SlidesController {
 	}
 	
 	 /**  
-     * ÎÄ¼şÏÂÔØ¹¦ÄÜ  
+     * æ–‡ä»¶ä¸‹è½½åŠŸèƒ½  
      * @param request  
      * @param response  
      * @throws Exception  
@@ -226,28 +226,28 @@ public class SlidesController {
 		}
 
     	 
-        //Ä£ÄâÎÄ¼ş£¬Ô´ÎÄ¼şÂ·¾¶Ãû  
+        //æ¨¡æ‹Ÿæ–‡ä»¶ï¼Œæºæ–‡ä»¶è·¯å¾„å  
         String outPutPath = request.getSession().getServletContext().getRealPath("data/csvFile");  
-        //ÏÂÔØÎÄ¼şÃû  
+        //ä¸‹è½½æ–‡ä»¶å  
         String filename = "downloadCSV";  
-        //±íÍ·Êı¾İ
+        //è¡¨å¤´æ•°æ®
         LinkedHashMap map = new LinkedHashMap();  
-        map.put("1", "ËùÊô·ÖÕ¾");  
-        map.put("2", "Ãû³Æ");  
-        map.put("3", "Í¼Æ¬");  
-        map.put("4", "Ê±¼ä");  
+        map.put("1", "æ‰€å±åˆ†ç«™");  
+        map.put("2", "åç§°");  
+        map.put("3", "å›¾ç‰‡");  
+        map.put("4", "æ—¶é—´");  
              		
-        String fileds[] = new String[] { "pcName", "sTitle" , "sTitleImg", "sAddTime"};// ÉèÖÃÁĞÓ¢ÎÄÃû£¨Ò²¾ÍÊÇÊµÌåÀàÀïÃæ¶ÔÓ¦µÄÁĞÃû£©  
+        String fileds[] = new String[] { "pcName", "sTitle" , "sTitleImg", "sAddTime"};// è®¾ç½®åˆ—è‹±æ–‡åï¼ˆä¹Ÿå°±æ˜¯å®ä½“ç±»é‡Œé¢å¯¹åº”çš„åˆ—åï¼‰  
         
         File file = CSVUtils.createCSVFile(sList, fileds, map, outPutPath,  
         		filename); 
-        //»ñÈ¡ÊäÈëÁ÷  
+        //è·å–è¾“å…¥æµ  
         InputStream bis = new BufferedInputStream(new FileInputStream(file));  
-        //×ªÂë£¬ÃâµÃÎÄ¼şÃûÖĞÎÄÂÒÂë  
+        //è½¬ç ï¼Œå…å¾—æ–‡ä»¶åä¸­æ–‡ä¹±ç   
         filename = URLEncoder.encode(filename,"UTF-8");  
-        //ÉèÖÃÎÄ¼şÏÂÔØÍ·  
+        //è®¾ç½®æ–‡ä»¶ä¸‹è½½å¤´  
         response.addHeader("Content-Disposition", "attachment;filename=" + file.getName());    
-        //1.ÉèÖÃÎÄ¼şContentTypeÀàĞÍ£¬ÕâÑùÉèÖÃ£¬»á×Ô¶¯ÅĞ¶ÏÏÂÔØÎÄ¼şÀàĞÍ    
+        //1.è®¾ç½®æ–‡ä»¶ContentTypeç±»å‹ï¼Œè¿™æ ·è®¾ç½®ï¼Œä¼šè‡ªåŠ¨åˆ¤æ–­ä¸‹è½½æ–‡ä»¶ç±»å‹    
         response.setContentType("multipart/form-data");   
         BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());  
         int len = 0;  
@@ -258,7 +258,7 @@ public class SlidesController {
         bis.close();
         out.close(); 
         
-        //É¾³ıÉú³ÉµÄÎÄ¼ş
+        //åˆ é™¤ç”Ÿæˆçš„æ–‡ä»¶
         deleteFile(file.getPath());
     }
 

@@ -6,12 +6,19 @@ public class Count {
 	
 	private int id;
 	private int cpid;
+	private String cpName;
 	private Product cpro;
 	private int pV;
 	private int uV;
 	private Date cAddTime;
 	
 	
+	public String getCpName() {
+		return cpName;
+	}
+	public void setCpName(String cpName) {
+		this.cpName = cpName;
+	}
 	public int getCpid() {
 		return cpid;
 	}

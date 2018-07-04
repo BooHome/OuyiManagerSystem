@@ -89,7 +89,7 @@ public class SaProductServiceimpl implements SaProductService{
 		for (SapCount count : countList) {
 			int flag = 0;
 			for (SapCount exitsCount : exitsCountList) {
-				if (exitsCount!=null && count!=null) {
+				if (exitsCount!=null && count!=null) {		
 					if (exitsCount.getSap().getUrl().equals(count.getSap().getUrl())
 							&& DateUtil.getDate(exitsCount.getCAddTime()).equals(DateUtil.getDate(new Date()))) {
 						count.setCAddTime(new Date());

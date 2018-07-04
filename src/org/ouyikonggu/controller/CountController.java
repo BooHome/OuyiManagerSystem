@@ -222,20 +222,23 @@ public class CountController {
     	for (int i = 0; i < result.size(); i++) {
 			cList.add((Count) result.get(i));
 		}
-
-    	 
+    	for (Count count : cList) {
+			count.setCpName(count.getCpro().getPTitle());
+		}
+   	 
         //模拟文件，源文件路径名  
         String outPutPath = request.getSession().getServletContext().getRealPath("data/csvFile");  
         //下载文件名  
         String filename = "downloadCSV";  
         //表头数据
         LinkedHashMap map = new LinkedHashMap();  
-        map.put("1", "产品名称");  
-        map.put("2", "产品访问量（PV）");  
-        map.put("3", "访问用户量（UV）");  
-        map.put("4", "数据统计时间");  
+        map.put("1", "所属分站Id");  
+        map.put("2", "产品名称");  
+        map.put("3", "产品访问量（PV）");  
+        map.put("4", "访问用户量（UV）");  
+        map.put("5", "数据统计时间");  
              		
-        String fileds[] = new String[] { "countName", "pV" , "uV", "cAddTime"};// 设置列英文名（也就是实体类里面对应的列名）  
+        String fileds[] = new String[] {"cpid", "cpName", "pV" , "uV", "cAddTime"};// 设置列英文名（也就是实体类里面对应的列名）  
         
         File file = CSVUtils.createCSVFile(cList, fileds, map, outPutPath,  
         		filename); 
