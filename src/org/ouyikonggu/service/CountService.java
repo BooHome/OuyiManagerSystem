@@ -20,7 +20,7 @@ public interface CountService {
 	
 	List<Member> selectMemberByPid(int pid);
 	
-	List<User> selectMember();
+	int selectMember();
 	
 	List<User> queryUser(Map map);
 	

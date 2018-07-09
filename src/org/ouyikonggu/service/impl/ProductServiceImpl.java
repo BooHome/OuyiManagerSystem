@@ -1,12 +1,10 @@
 package org.ouyikonggu.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.ouyikonggu.dao.ProductDAO;
 import org.ouyikonggu.dao.RegistDAO;
-import org.ouyikonggu.moudel.Count;
 import org.ouyikonggu.moudel.Product;
 import org.ouyikonggu.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductDAO productDao;
+	
+	@Autowired
+	RegistDAO registDao;
 	
 	/**
 	 * 查询列表
@@ -33,6 +34,9 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	public int delete(List<Product> idList) {
 		int row = productDao.delete(idList);
+		for (Product product : idList) {
+			registDao.delete(product.getId());
+		}
 		return row;
 	}
 

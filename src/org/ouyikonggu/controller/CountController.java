@@ -91,6 +91,7 @@ public class CountController {
 		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以  
 	    PageInfo pageInfo = new PageInfo<>(mList,19);  
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("rProduct",rProduct);
 		mav.addObject("pageInfo",pageInfo);
 		mav.setViewName("count/registerPhone");
 		return mav;
@@ -99,28 +100,27 @@ public class CountController {
 	// 查询产品
 	@RequestMapping(value = "searchregister", method = RequestMethod.GET)
 	public ModelAndView searchRegister(HttpServletRequest requst) {
+		
+		int pageNum=Integer.parseInt(requst.getParameter("pageNum"));
 		//进来的查询条件
 		String name = requst.getParameter("keyName");
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
 		String pcId=requst.getParameter("pcId");
 		
-		if (name.equals("")&&startTime.equals("") && endTime.equals("")&& pcId.equals("")) {
-			startTime=DateUtil.getDate(new Date());
-		}
-		System.err.println("在这里："+pcId);
 		Map searchR=new HashMap<>();
 		searchR.put("startTime", startTime);
 		searchR.put("endTime", endTime);
 		searchR.put("pTitle", name);
 		searchR.put("pcId", pcId);
+		searchR.put("CActivate", 1);
 		
 		// 导出下载文件数据
 		List<Count> dcList=csi.queryRegist(searchR);
 		requst.getSession().setAttribute("download", dcList);
 		
 	    //	引入分页查询，使用PageHelper分页功能 ;在查询之前传入当前页，然后多少记录  
-	    PageHelper.startPage(1,19);  
+	    PageHelper.startPage(pageNum,19);  
 	    
 		List<Count> cList=csi.queryRegist(searchR);
 		for (Count count : cList) {
@@ -132,7 +132,7 @@ public class CountController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("searchR",searchR);
 		mav.addObject("pageInfo",pageInfo);
-		mav.setViewName("count/registerCount");
+		mav.setViewName("count/searchRegisterCount");
 		return mav;
 	}
 	
@@ -141,12 +141,16 @@ public class CountController {
 	public ModelAndView userCount(HttpServletRequest request){
 		int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 		ModelAndView mav = new ModelAndView();
+		
+		Map defultR=new HashMap<>();
+		defultR.put("startTime", DateUtil.getDate(new Date()));
+		
 		// 导出下载文件数据
-		List<User> duList=csi.selectMember();
+		List<User> duList=csi.queryUser(defultR);
 		request.getSession().setAttribute("download", duList);
 		 //	引入分页查询，使用PageHelper分页功能 ;在查询之前传入当前页，然后多少记录  
 	    PageHelper.startPage(pageNum,19);  
-		List<User> uList=csi.selectMember();
+		List<User> uList=csi.queryUser(defultR);
 		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以  
 	    PageInfo pageInfo = new PageInfo<>(uList,19);  
 		mav.addObject("pageInfo",pageInfo);
@@ -157,33 +161,33 @@ public class CountController {
 	// 查询用户
 	@RequestMapping(value = "searchuser", method = RequestMethod.GET)
 	public ModelAndView searchUser(HttpServletRequest requst) {
+		int pageNum=Integer.parseInt(requst.getParameter("pageNum"));
 		// 进来的查询条件
 		String name = requst.getParameter("keyName");
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
+		String pNumber = requst.getParameter("pNumber");
 
 		Map searchU = new HashMap<>();
 		searchU.put("startTime", startTime);
 		searchU.put("endTime", endTime);
 		searchU.put("uTel", name);
+		searchU.put("pNumber", pNumber);
 		
 		// 导出下载文件数据
 		List<User> duList = csi.queryUser(searchU);
 		requst.getSession().setAttribute("download", duList);
 		 //	引入分页查询，使用PageHelper分页功能 ;在查询之前传入当前页，然后多少记录  
-	    PageHelper.startPage(1,19);  
+	    PageHelper.startPage(pageNum,19);  
 	    
 		List<User> uList = csi.queryUser(searchU);
-		for (User user : uList) {
-			System.out.println(user);
-		}
 
 		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以  
 	    PageInfo pageInfo = new PageInfo<>(uList,19);  
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageInfo", pageInfo);
 		mav.addObject("searchU",searchU);
-		mav.setViewName("count/userCount");
+		mav.setViewName("count/searchUserCount");
 		return mav;
 	}
 	
@@ -195,11 +199,7 @@ public class CountController {
 	    //	引入分页查询，使用PageHelper分页功能 ;在查询之前传入当前页，然后多少记录  
 	    PageHelper.startPage(pageNum,19);  
 		String uTel=req.getParameter("uTel");
-		System.out.println(uTel);
 		List<UserProduct> pList=csi.selectMemberByPhone(uTel);
-		for (UserProduct userProduct : pList) {
-			System.out.println(userProduct);
-		}
 		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以  
 	    PageInfo pageInfo = new PageInfo<>(pList,19);  
 		ModelAndView mav = new ModelAndView();

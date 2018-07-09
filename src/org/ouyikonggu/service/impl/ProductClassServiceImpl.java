@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ouyikonggu.dao.ProductClassDAO;
+import org.ouyikonggu.dao.ProductDAO;
+import org.ouyikonggu.dao.SlidesDAO;
+import org.ouyikonggu.moudel.Product;
 import org.ouyikonggu.moudel.ProductClass;
+import org.ouyikonggu.moudel.Slides;
 import org.ouyikonggu.service.ProductClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +19,15 @@ public class ProductClassServiceImpl implements ProductClassService {
 	@Autowired
 	ProductClassDAO productClassDao;
 	
+	@Autowired
+	ProductDAO productDao;
+	
+	@Autowired
+	SlidesDAO slidesDao;
+	
 	/**
-	 * ²éÑ¯ÁĞ±í
-	 * Ä£ºı²éÑ¯
+	 * æŸ¥è¯¢åˆ—è¡¨
+	 * æ¨¡ç³ŠæŸ¥è¯¢
 	 */
 	public List<ProductClass> queryList(ProductClass productClass) {
 		List<ProductClass> procList = new ArrayList<ProductClass>();
@@ -26,18 +36,27 @@ public class ProductClassServiceImpl implements ProductClassService {
 	}
 
 	/**
-	 * Í¨¹ıid
-	 * É¾³ıÒ»¸ö»òÕß¶à¸ö
+	 * é€šè¿‡id
+	 * åˆ é™¤ä¸€ä¸ªæˆ–è€…å¤šä¸ª
 	 */
 	public int delete(List<ProductClass> idList) {
-		int row = productClassDao.delete(idList);
+		int row=0;
+		List<Product> pList=new ArrayList<>();
+		List<Slides> sList=new ArrayList<>();
+		for (ProductClass productClass : idList) {
+			pList=productDao.selectByPcId(productClass.getId());
+			sList=slidesDao.selectByScid(productClass.getId());
+			if ((null==pList||pList.isEmpty()) && (null==sList||sList.isEmpty())) {
+				row = productClassDao.delete(idList);
+			}
+		}
 		return row;
 	}
 
 	
 	/**
-	 * Í¨¹ıid
-	 * ¸üĞÂ
+	 * é€šè¿‡id
+	 * æ›´æ–°
 	 */
 	public int update(ProductClass productclass) {
 		int row = productClassDao.update(productclass);
@@ -45,7 +64,7 @@ public class ProductClassServiceImpl implements ProductClassService {
 	}
 	
 	/**
-	 * ĞÂÔöÊı¾İ
+	 * æ–°å¢æ•°æ®
 	 */
 	public int add(ProductClass productclass) {
 		int row = productClassDao.add(productclass);
@@ -53,7 +72,7 @@ public class ProductClassServiceImpl implements ProductClassService {
 	}
 
 	/**
-	 * Í¨¹ıid²éÑ¯Êı¾İ
+	 * é€šè¿‡idæŸ¥è¯¢æ•°æ®
 	 */
 	@Override
 	public ProductClass selectById(int id) {

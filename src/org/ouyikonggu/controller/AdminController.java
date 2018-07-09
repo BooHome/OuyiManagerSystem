@@ -67,8 +67,8 @@ public class AdminController {
 	public void loginOut(HttpServletRequest requst,HttpServletResponse response) throws Exception{
 		HttpSession session=requst.getSession();
 		session.removeAttribute("user");
-		System.out.println(session.getAttribute("user"));
-		response.sendRedirect("login");
+		System.out.println("退出登录之后seeion的值："+session.getAttribute("user"));
+		requst.getRequestDispatcher("login").forward(requst, response);
 	}
 	
 	//图表测试

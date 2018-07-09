@@ -36,9 +36,10 @@ public class Initialization{
 	 	public void run() {
 			try {
 				while (true) {
-					int i = csi.queryCount();// 更新统计结果
-					if (i > 0) {
-						System.out.println("产品统计结果更新成功！");
+					int i = csi.queryCount();// 更新产品统计结果
+					int j=csi.selectMember();//更新用户统计结果
+					if (i > 0 && j > 0) {
+						System.out.println("产品和用户统计结果更新成功！");
 					}
 					Thread.sleep(1000 * 30);
 				}

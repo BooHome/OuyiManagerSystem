@@ -132,6 +132,23 @@ form {
  <%
  }
  %>
+ 
+<%
+	if((String)request.getAttribute("delStr")=="true"){
+%>
+		  <script>
+		  alert("分站删除成功！");
+		  </script>
+<%
+	  }else if((String)request.getAttribute("delStr")=="false"){
+%>
+		<script>
+		  alert("分站删除失败！该分站下还有产品和幻灯数据。");
+		</script>
+<%
+ }
+%>
+
 <div style="float: right;margin-right: 50px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
 </div>
 	<form class="form-inline definewidth m20" action="searchclassify"
@@ -199,7 +216,6 @@ form {
 		$(document).ready(function() {
 			$(".deleteClassify").click(function() {
 				if (confirm("确定删除吗?")) {
-					alert("删除成功!");
 					return true;
 				}
 				return false;

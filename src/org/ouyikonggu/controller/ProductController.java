@@ -231,6 +231,13 @@ public class ProductController {
 		if(file.getSize()==0) {
 			updateP.setPTitleImg(orgUrl);
 		}else {
+			String dWebPath=requst.getSession().getServletContext().getRealPath("data/prod/");
+			String dFileName=StringUtils.substringAfter(orgUrl, "http://sj.ouyisms.com/OuyiManagerSystem/data/prod/");
+			//删除原有的图片
+			File deleteFile=new File(dWebPath+dFileName);
+			if (deleteFile!=null&&deleteFile.exists()) {
+				deleteFile.delete();
+			}
 			// 上传选择图片
 			String webPath = requst.getSession().getServletContext().getRealPath("data/prod/");
 			String fileName=new Date().getTime() + file.getOriginalFilename();

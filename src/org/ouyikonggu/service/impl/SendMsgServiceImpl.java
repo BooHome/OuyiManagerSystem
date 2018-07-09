@@ -75,19 +75,23 @@ public class SendMsgServiceImpl implements SendMsgService{
 	@Override
 	public void saveMember(Map<String, String> map) {
 		String phone = map.get("phone");
-		String pid = map.get("pid");
-		Member mem = new Member();
-		mem.setMProductID(Integer.parseInt(pid));
-		mem.setMTel(phone);
-		int row2 = memberDAO.add(mem);
+		if(phone!=null && phone.length()==11) {
+			String pid = map.get("pid");
+			Member mem = new Member();
+			mem.setMProductID(Integer.parseInt(pid));
+			mem.setMTel(phone);
+			int row2 = memberDAO.add(mem);
+		}
 	}
 
 	@Override
 	public void savePhoneWithoutPid(Map<String, String> map) {
 		String phone = map.get("phone");
-		Member mem = new Member();
-		mem.setMTel(phone);
-		int row2 = memberDAO.add(mem);
+		if(phone!=null && phone.length()==11) {
+			Member mem = new Member();
+			mem.setMTel(phone);
+			int row2 = memberDAO.add(mem);
+		}
 	}
 	
 }

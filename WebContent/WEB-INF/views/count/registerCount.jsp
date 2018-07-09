@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta http-equiv="refresh" content="10">
+<meta http-equiv="refresh" content="50">
 <title>产品统计</title>
 <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -113,6 +113,8 @@ form {
 <div style="float: right;margin-right: 50px;margin-top: 25px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
 </div>
 <form class="form-inline definewidth m20" action="searchregister" method="get">
+		<input type="hidden" name="pageNum" id="pageNum"
+			 value="1" >
 		开始时间：<input style="width: 130px;height: 30px;" type="date" name="startTime" id="startTime"
 			 value="${searchR['startTime']}" >&nbsp;&nbsp;
 		结束时间： <input style="width: 150px;height: 30px;" type="date" name="endTime" id="endTime"

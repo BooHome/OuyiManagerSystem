@@ -110,10 +110,15 @@ form {
 <div style="float: right;margin-right: 50px;margin-top: 25px;font-size: 1.2em;">导出为CSV文件&nbsp;<a id="test" href="downloadFile2" title="导出为CSV文件"><span class="glyphicon glyphicon-download-alt" /></a>   
 </div>
 <form class="form-inline definewidth m20" action="searchuser" method="get">
+	<input type="hidden" name="pageNum" id="pageNum"
+			 value="1" >
 		开始时间：<input style="width: 130px;height: 30px;" type="date" name="startTime" id="startTime"
 			 value="${searchU['startTime']}" >&nbsp;&nbsp;
 		结束时间： <input style="width: 150px;height: 30px;" type="date" name="endTime" id="endTime"
 			 value="${searchU['endTime']}" >&nbsp;&nbsp;
+		访问产品数量：
+		<input type="text" name="pNumber" id="pNumber"
+			class="abc input-default" value="${searchU['pNumber']}" placeholder="请输入访问产品数量">&nbsp;&nbsp;
 		手机号码：
 		<input type="text" name="keyName" id="keyName"
 			class="abc input-default" value="${searchU['uTel']}" placeholder="请输入手机号码">&nbsp;&nbsp;

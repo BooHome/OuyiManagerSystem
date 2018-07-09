@@ -9,6 +9,7 @@
 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
+<link rel="shortcut icon" href="ico/favicon.png">
 <style type="text/css">
 /*Global Styles*/
 body {

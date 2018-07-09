@@ -23,7 +23,11 @@
 				     <if test="uTel!=null and !&quot;&quot;.equals(uTel.trim())">  
 				        and  uTel like "%"#{uTel}"%" 
 				    </if>  
+				   <if test="pNumber!=null and !&quot;&quot;.equals(pNumber.trim())">  
+				        and  pCount=#{pNumber}  
+				    </if>  
 	        </where>
+	        order by pCount desc 
 	  </select>
 	  
     <insert id="add"  parameterType="User">

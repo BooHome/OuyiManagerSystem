@@ -109,7 +109,8 @@ public class CountServiceImpl implements CountService {
 
 	//实时统计用户的情况，并更新到数据库中
 	@Override
-	public List<User> selectMember() {
+	public int selectMember() {
+		int result=0;
 		List<Member> mList=memberDAo.queryList();
 		List<User> exitsUList=userDao.queryUser(null);//已存在的user
 		List<User> uList=new ArrayList<>();
@@ -118,9 +119,8 @@ public class CountServiceImpl implements CountService {
 			User user=new User();
 			user.setUTel(member.getMTel());
 			user.setUAddTime(member.getMAddTime());
-			int pCount=memberDAo.countPidByPhone(member.getMTel());
+			int pCount=memberDAo.countPidByPhone(member.getMTel());  //统计用户产品的数量
 			user.setPCount(pCount);
-			System.out.println(user);
 			uList.add(user);
 		}
 		
@@ -128,7 +128,7 @@ public class CountServiceImpl implements CountService {
 			int flag=0;
 			for (User exitsUser : exitsUList) {
 				if (exitsUser.getUTel().equals(user.getUTel())){
-					int result=userDao.update(user);
+					result=userDao.update(user);
 					flag=1;
 					break;
 				}
@@ -136,9 +136,9 @@ public class CountServiceImpl implements CountService {
 			if (flag==1) {
 				continue;
 			}
-			int result=userDao.add(user);
-		}		
-		return uList;
+			result=userDao.add(user);
+		}
+		return result;
 	}
 
 	//根据传入的查询条件查询产品的统计结果

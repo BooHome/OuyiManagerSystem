@@ -13,8 +13,6 @@
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
-
-
 	<context:annotation-config />
 	<context:component-scan base-package="org.ouyikonggu.service" />
 	
@@ -38,7 +36,6 @@
 		</property>
 	</bean>
 
-
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="typeAliasesPackage" value="org.ouyikonggu.moudel" />
 		<property name="dataSource" ref="dataSource" />
@@ -60,4 +57,12 @@
 		<property name="basePackage" value="org.ouyikonggu.dao" />
 	</bean>
 
+	<!-- 注解方式配置事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" /> 
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+    </bean>  
+    
 </beans>

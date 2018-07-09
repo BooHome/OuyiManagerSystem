@@ -7,36 +7,36 @@ import org.ouyikonggu.moudel.Slides;
 
 public interface ProductDAO {
 	/**
-	 * 添加
+	 * 娣诲姞
 	 */
 	public int add(Product product); 
 	/**
-	 * 删除
+	 * 鍒犻櫎
 	 */
     public int delete(List<Product> idList); 
     /**
-	 * 通过名字查询
+	 * 閫氳繃鍚嶅瓧鏌ヨ
 	 */  
     public Product selectByName(Product product); 
     /**
-	 * 通过id查询
+	 * 閫氳繃id鏌ヨ
 	 */
     public Product  selectById(int id); 
     /**
-	 * 通过产品名称查询
+	 * 閫氳繃浜у搧鍚嶇О鏌ヨ
 	 */
     public Product  selectByTitle(String pTitle); 
     /**
-	 * 更新
+	 * 鏇存柊
 	 */
     public int update(Product product);  
     /**
-	 * 查询全部列表
+	 * 鏌ヨ鍏ㄩ儴鍒楄〃
 	 */ 
     public List<Product> queryList(Product product);
     
     /**
-	 * 根据分站id获取分站下的全部产品
+	 * 鏍规嵁鍒嗙珯id鑾峰彇鍒嗙珯涓嬬殑鍏ㄩ儴浜у搧
 	 */
     public List<Product> selectByPcId(int id);
 }

@@ -228,19 +228,17 @@ public class SaproductController {
 	// 查询独立产品统计
 	@RequestMapping(value = "searchStandProduct", method = RequestMethod.GET)
 	public ModelAndView searchStandProduct(HttpServletRequest requst) {
+		int pageNum = Integer.parseInt(requst.getParameter("pageNum"));
 		//进来的查询条件
 		String name = requst.getParameter("keyName");
 		String startTime = requst.getParameter("startTime");
 		String endTime = requst.getParameter("endTime");
-
-		if (name.equals("")&&startTime.equals("")&& endTime.equals("")) {
-			startTime=DateUtil.getDate(new Date());
-		}
 		
 		Map searchR=new HashMap<>();
 		searchR.put("startTime", startTime);
 		searchR.put("endTime", endTime);
 		searchR.put("countName", name);
+		searchR.put("CActivate", 1);
 		
 		// 导出下载文件数据
 		List<SapCount> dcountList=spsi.querySaproduct(searchR);
@@ -250,7 +248,7 @@ public class SaproductController {
 		}
 		requst.getSession().setAttribute("download", dcountList);
 	    //	引入分页查询，使用PageHelper分页功能 ;在查询之前传入当前页，然后多少记录  
-	    PageHelper.startPage(1,19);  
+	    PageHelper.startPage(pageNum,19);  
 	    
 	    List<SapCount> countList=spsi.querySaproduct(searchR);
 	    
@@ -259,7 +257,7 @@ public class SaproductController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("searchR",searchR);
 		mav.addObject("pageInfo",pageInfo);
-		mav.setViewName("standproduct/standProductCount");
+		mav.setViewName("standproduct/searchSproductCount");
 		return mav;
 	}
 	

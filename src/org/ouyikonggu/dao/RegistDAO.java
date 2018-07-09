@@ -13,5 +13,8 @@ public interface RegistDAO {
 	int add(Count count);
 	
 	int update(Count count);
+	
+	//同步删除产品统计数据
+	int delete(int deleteId);
 
 }

@@ -142,7 +142,7 @@ public class SlidesController {
 		//删除已经上传的文件
 		String webPath=requst.getSession().getServletContext().getRealPath("data/slide/");
 		String fileName=StringUtils.substringAfter(sd.getSTitleImg(), "http://sj.ouyisms.com/OuyiManagerSystem/data/slide/");
-		System.out.println(webPath+fileName);
+
 		File deleteFile=new File(webPath+fileName);
 		if (deleteFile!=null&&deleteFile.exists()) {
 			deleteFile.delete();
@@ -186,6 +186,13 @@ public class SlidesController {
 		if (file.getSize()==0) {
 			slide.setSTitleImg(orgImg);
 		}else{			
+			String dWebPath=requst.getSession().getServletContext().getRealPath("data/slide/");
+			String dFileName=StringUtils.substringAfter(orgImg, "http://sj.ouyisms.com/OuyiManagerSystem/data/slide/");
+			//删除原有的图片
+			File deleteFile=new File(dWebPath+dFileName);
+			if (deleteFile!=null&&deleteFile.exists()) {
+				deleteFile.delete();
+			}
 			//上传选择图片
 			String webPath=requst.getSession().getServletContext().getRealPath("data/slide/");
 			String fileName=new Date().getTime() + file.getOriginalFilename();

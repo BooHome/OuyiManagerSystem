@@ -115,13 +115,19 @@ public class ProductClassController {
 
 	// 删除分站
 	@RequestMapping(value = "deleteclassify", method = RequestMethod.GET)
-	public void deleteClassify(@RequestParam("pc") int deletePcId, HttpServletResponse response) throws Exception {
+	public void deleteClassify(@RequestParam("pc") int deletePcId, HttpServletResponse response,HttpServletRequest requst) throws Exception {
 		ProductClass deletePc = new ProductClass();
 		deletePc.setId(deletePcId);
 		List<ProductClass> list = new ArrayList<>();
 		list.add(deletePc);
 		int result = pcs.delete(list);
-		response.sendRedirect("classifyManager?pageNum=1");
+		if (result>0) {
+			requst.setAttribute("delStr", "true");
+			requst.getRequestDispatcher("classifyManager?pageNum=1").forward(requst, response);
+		}else{
+			requst.setAttribute("delStr", "false");
+			requst.getRequestDispatcher("classifyManager?pageNum=1").forward(requst, response);
+		}
 	}
 
 	//修改分站跳转

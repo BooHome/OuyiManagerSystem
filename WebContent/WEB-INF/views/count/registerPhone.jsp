@@ -135,24 +135,24 @@ form {
 	 <div style="float:right">
 		 <nav>
 			<ul class="pager">
-				<li><a href="registerPhone?pageNum=1&pTitle=${pTitle}">首页</a></li>
+				<li><a href="registerPhone?pageNum=1&pId=${rProduct.id}">首页</a></li>
 				<c:if test="${pageInfo.hasPreviousPage}">
-					<li><a href="registerPhone?pageNum=${pageInfo.pageNum-1}&pTitle=${pTitle}" aria-label="Previous"> <span
+					<li><a href="registerPhone?pageNum=${pageInfo.pageNum-1}&pId=${rProduct.id}" aria-label="Previous"> <span
 						aria-hidden="true">上一页</span>
 				</a></li>
 				</c:if>
 				<c:if test="${pageInfo.hasNextPage}">
-					<li><a href="registerPhone?pageNum=${pageInfo.pageNum+1}&pTitle=${pTitle}" aria-label="Next"> 
+					<li><a href="registerPhone?pageNum=${pageInfo.pageNum+1}&pId=${rProduct.id}" aria-label="Next"> 
 					<span aria-hidden="true">下一页</span>
 				</a></li>
 				</c:if>
-				<li><a href="registerPhone?pageNum=${pageInfo.pages}&pTitle=${pTitle}s">尾页</a></li>
+				<li><a href="registerPhone?pageNum=${pageInfo.pages}&pId=${rProduct.id}">尾页</a></li>
 				<li>
 					<form action="registerPhone" method="get" style="float:right">
 						跳转至:<input style="width: 30%; " type="number"
 							name="pageNum" id="pageNum" min="1"
 							value="${pageInfo.pageNum}" /> 页
-							<input  type="hidden" name="pageNum" id="pageNum" value="${pTitle}" />
+							<input  type="hidden" name="pId" id="pId" value="${rProduct.id}" />
 						<button type="submit" class="btn btn-info btn-sm">跳转</button>
 					</form>
 				</li>
